@@ -1,0 +1,1678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0f1e5a">
+    <title>EWU Football Tournament 2025</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <style>
+        :root {
+            --primary: #0f1e5a;
+            --accent: #ff6b6b;
+            --bg-peach: #ffd5c2;
+            --success: #28a745;
+            --warning: #ffc107;
+            --info: #17a2b8;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, var(--bg-peach), #fff5f0);
+            color: #333;
+        }
+
+        .navbar {
+            background: var(--primary);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .hero-section {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
+                        url('https://images.unsplash.com/photo-1552318965-6e6be7484ada?auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: white;
+            padding: 8rem 0;
+            position: relative;
+            text-align: center;
+        }
+
+        .hero-section h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .hero-section p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .hero-stat {
+            background: rgba(255,255,255,0.2);
+            padding: 1rem 1.5rem;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .hero-stat i {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .section-title h2 {
+            font-weight: 700;
+            color: var(--primary);
+            position: relative;
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+
+        .section-title h2:after {
+            content: '';
+            position: absolute;
+            width: 60%;
+            height: 3px;
+            background: var(--accent);
+            bottom: 0;
+            left: 20%;
+        }
+
+        .fixture-card, .team-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            margin-bottom: 2rem;
+        }
+
+        .fixture-card:hover, .team-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+        .fixture-header, .team-header {
+            background: var(--primary);
+            color: white;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .fixture-body, .team-body {
+            padding: 20px;
+        }
+
+        .teams {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .team {
+            text-align: center;
+            flex: 1;
+        }
+
+        .team-logo {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .vs {
+            font-weight: bold;
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin: 0 20px;
+        }
+
+        .fixture-details {
+            text-align: center;
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+        .fixture-details i {
+            margin-right: 8px;
+            color: var(--primary);
+        }
+
+        .team-formation {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .formation-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .player-dot {
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            margin: 5px auto;
+        }
+
+        .player-name {
+            font-size: 0.8rem;
+            text-align: center;
+            margin-top: 5px;
+        }
+
+        .player-stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .player-stat {
+            background: #f8f9fa;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .player-stat i {
+            color: var(--primary);
+        }
+
+        .venue-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .venue-image img {
+            width: 100%;
+            border-radius: 15px;
+            height: 300px;
+            object-fit: cover;
+        }
+
+        .venue-details {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .venue-details p {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .venue-details i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+            color: var(--primary);
+        }
+
+        .rules-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .rules-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .rules-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+        }
+
+        .rules-list li:before {
+            content: "⚽";
+            margin-right: 10px;
+            color: var(--primary);
+        }
+
+        .rules-list li:last-child {
+            border-bottom: none;
+        }
+
+        footer {
+            background: var(--primary);
+            color: white;
+            padding: 3rem 0 1rem;
+            margin-top: 3rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-column h3 {
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .footer-column a {
+            display: block;
+            color: #ddd;
+            margin-bottom: 0.5rem;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-column a:hover {
+            color: white;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            transition: background 0.3s;
+        }
+
+        .social-links a:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            border: none;
+            padding: 10px 25px;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-primary:hover {
+            background: #0c1847;
+            transform: translateY(-2px);
+        }
+
+        .btn-outline-primary {
+            color: var(--primary);
+            border-color: var(--primary);
+            border-radius: 30px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-outline-primary:hover {
+            background: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .match-card {
+            height: 100%;
+            border: none;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .match-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .match-header {
+            background: var(--primary);
+            color: white;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .match-body {
+            padding: 20px;
+        }
+
+        .team-logo-small {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            margin: 0 auto 10px;
+        }
+
+        .formation-field {
+            background: linear-gradient(#38b000, #008000);
+            border-radius: 10px;
+            padding: 20px;
+            height: 400px;
+            position: relative;
+        }
+
+        .player-row {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 30px;
+        }
+
+        .player-item {
+            text-align: center;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .hero-section {
+                padding: 5rem 0;
+            }
+            
+            .hero-section h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero-stats {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .venue-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .teams {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .vs {
+                margin: 10px 0;
+            }
+        }
+    </style>
+    <!-- small favicon fallback -->
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
+</head>
+<body>
+    <!-- Header Section -->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top py-3">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="#">
+                <div class="bg-white rounded-circle p-2 me-2">
+                    <img src="https://upload.wikimedia.org/wikipedia/en/thumb/7/79/East_West_University_Logo.svg/100px-East_West_University_Logo.svg.png" 
+                         alt="EWU Logo" width="40" height="40">
+                </div>
+                <div>
+                    <h5 class="mb-0">East West University</h5>
+                    <small class="text-light">Football Tournament 2025</small>
+                </div>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#fixtures">
+                            <i class="fas fa-futbol me-1"></i> Fixtures
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#teams">
+                            <i class="fas fa-users me-1"></i> Teams
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#upcoming">
+                            <i class="fas fa-calendar-alt me-1"></i> Upcoming
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#venue">
+                            <i class="fas fa-map-marker-alt me-1"></i> Venue
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#rules">
+                            <i class="fas fa-book me-1"></i> Rules
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <h1>East West University Football Tournament</h1>
+            <p>Join us for the most exciting inter-department football competition of the year. Witness skill, passion, and sportsmanship as teams battle for glory.</p>
+            <a href="#fixtures" class="btn btn-primary">
+                <i class="fas fa-futbol me-2"></i>View Fixtures
+            </a>
+            <div class="hero-stats">
+                <div class="hero-stat">
+                    <i class="fas fa-calendar-alt"></i>
+                    <div>6 Matches</div>
+                </div>
+                <div class="hero-stat">
+                    <i class="fas fa-users"></i>
+                    <div>8 Teams</div>
+                </div>
+                <div class="hero-stat">
+                    <i class="fas fa-trophy"></i>
+                    <div>500+ Fans</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Fixtures Section -->
+    <section id="fixtures" class="py-5">
+        <div class="container">
+            <div class="section-title">
+                <h2><i class="fas fa-futbol me-2"></i>Tournament Fixtures</h2>
+            </div>
+            <div class="row">
+                <!-- Match 1 -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="fixture-card">
+                        <div class="fixture-header">
+                            <h5>Group Stage - Match 1</h5>
+                        </div>
+                        <div class="fixture-body">
+                            <div class="teams">
+                                <div class="team">
+                                    <div class="team-logo" style="background-color: #0f1e5a;">
+                                        CSE
+                                    </div>
+                                    <h6>Computer Science</h6>
+                                </div>
+                                <div class="vs">VS</div>
+                                <div class="team">
+                                    <div class="team-logo" style="background-color: #1e3a8a;">
+                                        EEE
+                                    </div>
+                                    <h6>Electrical Engineering</h6>
+                                </div>
+                            </div>
+                            <div class="fixture-details">
+                                <p><i class="fas fa-calendar"></i> October 15, 2025</p>
+                                <p><i class="fas fa-clock"></i> 3:00 PM</p>
+                                <p><i class="fas fa-map-marker-alt"></i> EWU Football Ground</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Match 2 -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="fixture-card">
+                        <div class="fixture-header">
+                            <h5>Group Stage - Match 2</h5>
+                        </div>
+                        <div class="fixture-body">
+                            <div class="teams">
+                                <div class="team">
+                                    <div class="team-logo" style="background-color: #ef4444;">
+                                        BBA
+                                    </div>
+                                    <h6>Business Administration</h6>
+                                </div>
+                                <div class="vs">VS</div>
+                                <div class="team">
+                                    <div class="team-logo" style="background-color: #1e3a8a;">
+                                        ENG
+                                    </div>
+                                    <h6>English Department</h6>
+                                </div>
+                            </div>
+                            <div class="fixture-details">
+                                <p><i class="fas fa-calendar"></i> October 16, 2025</p>
+                                <p><i class="fas fa-clock"></i> 4:30 PM</p>
+                                <p><i class="fas fa-map-marker-alt"></i> EWU Football Ground</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Match 3 -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="fixture-card">
+                        <div class="fixture-header">
+                            <h5>Group Stage - Match 3</h5>
+                        </div>
+                        <div class="fixture-body">
+                            <div class="teams">
+                                <div class="team">
+                                    <div class="team-logo" style="background-color: #0f1e5a;">
+                                        LAW
+                                    </div>
+                                    <h6>Law Department</h6>
+                                </div>
+                                <div class="vs">VS</div>
+                                <div class="team">
+                                    <div class="team-logo" style="background-color: #1e3a8a;">
+                                        PHY
+                                    </div>
+                                    <h6>Physics Department</h6>
+                                </div>
+                            </div>
+                            <div class="fixture-details">
+                                <p><i class="fas fa-calendar"></i> October 18, 2025</p>
+                                <p><i class="fas fa-clock"></i> 3:00 PM</p>
+                                <p><i class="fas fa-map-marker-alt"></i> EWU Football Ground</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Match 4 -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="fixture-card">
+                        <div class="fixture-header">
+                            <h5>Semi-Final - Match 1</h5>
+                        </div>
+                        <div class="fixture-body">
+                            <div class="teams">
+                                <div class="team">
+                                    <div class="team-logo" style="background-color: #6b7280;">
+                                        TBD
+                                    </div>
+                                    <h6>Group A Winner</h6>
+                                </div>
+                                <div class="vs">VS</div>
+                                <div class="team">
+                                    <div class="team-logo" style="background-color: #6b7280;">
+                                        TBD
+                                    </div>
+                                    <h6>Group B Runner-up</h6>
+                                </div>
+                            </div>
+                            <div class="fixture-details">
+                                <p><i class="fas fa-calendar"></i> October 22, 2025</p>
+                                <p><i class="fas fa-clock"></i> 3:00 PM</p>
+                                <p><i class="fas fa-map-marker-alt"></i> EWU Football Ground</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Match 5 -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="fixture-card">
+                        <div class="fixture-header">
+                            <h5>Semi-Final - Match 2</h5>
+                        </div>
+                        <div class="fixture-body">
+                            <div class="teams">
+                                <div class="team">
+                                    <div class="team-logo" style="background-color: #6b7280;">
+                                        TBD
+                                    </div>
+                                    <h6>Group B Winner</h6>
+                                </div>
+                                <div class="vs">VS</div>
+                                <div class="team">
+                                    <div class="team-logo" style="background-color: #6b7280;">
+                                        TBD
+                                    </div>
+                                    <h6>Group A Runner-up</h6>
+                                </div>
+                            </div>
+                            <div class="fixture-details">
+                                <p><i class="fas fa-calendar"></i> October 23, 2025</p>
+                                <p><i class="fas fa-clock"></i> 4:30 PM</p>
+                                <p><i class="fas fa-map-marker-alt"></i> EWU Football Ground</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Match 6 -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="fixture-card">
+                        <div class="fixture-header">
+                            <h5>Grand Final</h5>
+                        </div>
+                        <div class="fixture-body">
+                            <div class="teams">
+                                <div class="team">
+                                    <div class="team-logo" style="background-color: #6b7280;">
+                                        TBD
+                                    </div>
+                                    <h6>Semi-Final 1 Winner</h6>
+                                </div>
+                                <div class="vs">VS</div>
+                                <div class="team">
+                                    <div class="team-logo" style="background-color: #6b7280;">
+                                        TBD
+                                    </div>
+                                    <h6>Semi-Final 2 Winner</h6>
+                                </div>
+                            </div>
+                            <div class="fixture-details">
+                                <p><i class="fas fa-calendar"></i> October 27, 2025</p>
+                                <p><i class="fas fa-clock"></i> 4:00 PM</p>
+                                <p><i class="fas fa-map-marker-alt"></i> EWU Football Ground</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Teams Section -->
+    <section id="teams" class="py-5 bg-light">
+        <div class="container">
+            <div class="section-title">
+                <h2><i class="fas fa-users me-2"></i>Team Line-ups & Formations</h2>
+            </div>
+            <div class="row g-4">
+                <!-- Team 1 -->
+                <div class="col-lg-6">
+                    <div class="team-card">
+                        <div class="team-header">
+                            <h4>Computer Science Tigers</h4>
+                            <p><i class="fas fa-trophy text-warning me-1"></i> League Leaders</p>
+                        </div>
+                        <div class="team-body">
+                            <div class="row g-3 mb-4">
+                                <div class="col-4 text-center">
+                                    <div class="bg-light rounded p-3">
+                                        <i class="fas fa-star text-warning mb-2"></i>
+                                        <h5 class="mb-0">25</h5>
+                                        <small class="text-muted">Points</small>
+                                    </div>
+                                </div>
+                                <div class="col-4 text-center">
+                                    <div class="bg-light rounded p-3">
+                                        <i class="fas fa-futbol text-success mb-2"></i>
+                                        <h5 class="mb-0">24</h5>
+                                        <small class="text-muted">Goals</small>
+                                    </div>
+                                </div>
+                                <div class="col-4 text-center">
+                                    <div class="bg-light rounded p-3">
+                                        <i class="fas fa-shield-alt text-danger mb-2"></i>
+                                        <h5 class="mb-0">8</h5>
+                                        <small class="text-muted">Conceded</small>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Team Formation -->
+                            <div class="team-formation mb-4">
+                                <h5 class="text-center mb-3">
+                                    <i class="fas fa-tactics me-2"></i>
+                                    Formation: 4-3-3
+                                </h5>
+                                <div class="formation-field">
+                                    <!-- Forwards -->
+                                    <div class="player-row" style="padding-top: 20px;">
+                                        <div class="player-item">
+                                            <div class="player-dot">9</div>
+                                            <div class="player-name text-white">Tanvir</div>
+                                        </div>
+                                        <div class="player-item">
+                                            <div class="player-dot">11</div>
+                                            <div class="player-name text-white">Sakib</div>
+                                        </div>
+                                        <div class="player-item">
+                                            <div class="player-dot">7</div>
+                                            <div class="player-name text-white">Fahim</div>
+                                        </div>
+                                    </div>
+                                    <!-- Midfielders -->
+                                    <div class="player-row" style="padding-top: 80px;">
+                                        <div class="player-item">
+                                            <div class="player-dot">8</div>
+                                            <div class="player-name text-white">Naim</div>
+                                        </div>
+                                        <div class="player-item">
+                                            <div class="player-dot">6</div>
+                                            <div class="player-name text-white">Arif</div>
+                                        </div>
+                                        <div class="player-item">
+                                            <div class="player-dot">10</div>
+                                            <div class="player-name text-white">Rahman</div>
+                                        </div>
+                                    </div>
+                                    <!-- Defenders -->
+                                    <div class="player-row" style="padding-top: 80px;">
+                                        <div class="player-item">
+                                            <div class="player-dot">2</div>
+                                            <div class="player-name text-white">Karim</div>
+                                        </div>
+                                        <div class="player-item">
+                                            <div class="player-dot">4</div>
+                                            <div class="player-name text-white">Rahim</div>
+                                        </div>
+                                        <div class="player-item">
+                                            <div class="player-dot">5</div>
+                                            <div class="player-name text-white">Salam</div>
+                                        </div>
+                                        <div class="player-item">
+                                            <div class="player-dot">3</div>
+                                            <div class="player-name text-white">Jabbar</div>
+                                        </div>
+                                    </div>
+                                    <!-- Goalkeeper -->
+                                    <div class="player-row justify-content-center" style="padding-top: 60px;">
+                                        <div class="player-item">
+                                            <div class="player-dot">1</div>
+                                            <div class="player-name text-white">Khan (GK)</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Team Players List -->
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Player</th>
+                                            <th>Position</th>
+                                            <th>Stats</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>Rahim Khan</td>
+                                            <td>Goalkeeper</td>
+                                            <td>
+                                                <span class="player-stat">
+                                                    <i class="fas fa-shield-alt"></i>
+                                                    5 Clean Sheets
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>7</td>
+                                            <td>Sakib Al Hasan</td>
+                                            <td>Midfielder</td>
+                                            <td>
+                                                <span class="player-stat">
+                                                    <i class="fas fa-futbol"></i>
+                                                    8 Goals
+                                                </span>
+                                                <span class="player-stat">
+                                                    <i class="fas fa-shoe-prints"></i>
+                                                    6 Assists
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>9</td>
+                                            <td>Tanvir Ahmed</td>
+                                            <td>Forward</td>
+                                            <td>
+                                                <span class="player-stat">
+                                                    <i class="fas fa-futbol"></i>
+                                                    10 Goals
+                                                </span>
+                                                <span class="player-stat">
+                                                    <i class="fas fa-shoe-prints"></i>
+                                                    4 Assists
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>10</td>
+                                            <td>Fahim Rahman</td>
+                                            <td>Midfielder</td>
+                                            <td>
+                                                <span class="player-stat">
+                                                    <i class="fas fa-futbol"></i>
+                                                    4 Goals
+                                                </span>
+                                                <span class="player-stat">
+                                                    <i class="fas fa-shoe-prints"></i>
+                                                    8 Assists
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Team 2 -->
+                <div class="col-lg-6">
+                    <div class="team-card">
+                        <div class="team-header">
+                            <h4>Electrical Engineering Warriors</h4>
+                            <p><i class="fas fa-bolt text-warning me-1"></i> Power Players</p>
+                        </div>
+                        <div class="team-body">
+                            <div class="row g-3 mb-4">
+                                <div class="col-4 text-center">
+                                    <div class="bg-light rounded p-3">
+                                        <i class="fas fa-star text-warning mb-2"></i>
+                                        <h5 class="mb-0">22</h5>
+                                        <small class="text-muted">Points</small>
+                                    </div>
+                                </div>
+                                <div class="col-4 text-center">
+                                    <div class="bg-light rounded p-3">
+                                        <i class="fas fa-futbol text-success mb-2"></i>
+                                        <h5 class="mb-0">20</h5>
+                                        <small class="text-muted">Goals</small>
+                                    </div>
+                                </div>
+                                <div class="col-4 text-center">
+                                    <div class="bg-light rounded p-3">
+                                        <i class="fas fa-shield-alt text-danger mb-2"></i>
+                                        <h5 class="mb-0">12</h5>
+                                        <small class="text-muted">Conceded</small>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Team Formation -->
+                            <div class="team-formation mb-4">
+                                <h5 class="text-center mb-3">
+                                    <i class="fas fa-tactics me-2"></i>
+                                    Formation: 4-4-2
+                                </h5>
+                                <div class="formation-field">
+                                    <!-- Forwards -->
+                                    <div class="player-row" style="padding-top: 20px;">
+                                        <div class="player-item">
+                                            <div class="player-dot">9</div>
+                                            <div class="player-name text-white">Jamal</div>
+                                        </div>
+                                        <div class="player-item">
+                                            <div class="player-dot">11</div>
+                                            <div class="player-name text-white">Raju</div>
+                                        </div>
+                                    </div>
+                                    <!-- Midfielders -->
+                                    <div class="player-row" style="padding-top: 80px;">
+                                        <div class="player-item">
+                                            <div class="player-dot">7</div>
+                                            <div class="player-name text-white">penaldo</div>
+                                        </div>
+                                        <div class="player-item">
+                                            <div class="player-dot">8</div>
+                                            <div class="player-name text-white">Fahim</div>
+                                        </div>
+                                        <div class="player-item">
+                                            <div class="player-dot">10</div>
+                                            <div class="player-name text-white">Sumon</div>
+                                        </div>
+                                        <div class="player-item">
+                                            <div class="player-dot">12</div>
+                                            <div class="player-name text-white">Hasan</div>
+                                        </div>
+                                    </div>
+                                    <!-- Defenders -->
+                                    <div class="player-row" style="padding-top: 80px;">
+                                        <div class="player-item">
+                                            <div class="player-dot">2</div>
+                                            <div class="player-name text-white">Karim</div>
+                                        </div>
+                                        <div class="player-item">
+                                            <div class="player-dot">4</div>
+                                            <div class="player-name text-white">Rony</div>
+                                        </div>
+                                        <div class="player-item">
+                                            <div class="player-dot">5</div>
+                                            <div class="player-name text-white">Shahin</div>
+                                        </div>
+                                        <div class="player-item">
+                                            <div class="player-dot">3</div>
+                                            <div class="player-name text-white">Rakib</div>
+                                        </div>
+                                    </div>
+                                    <!-- Goalkeeper -->
+                                    <div class="player-row justify-content-center" style="padding-top: 60px;">
+                                        <div class="player-item">
+                                            <div class="player-dot">1</div>
+                                            <div class="player-name text-white">Karim (GK)</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Team Players List -->
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Player</th>
+                                            <th>Position</th>
+                                            <th>Stats</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>Karim Ahmed</td>
+                                            <td>Goalkeeper</td>
+                                            <td>
+                                                <span class="player-stat">
+                                                    <i class="fas fa-shield-alt"></i>
+                                                    4 Clean Sheets
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>9</td>
+                                            <td>Jamal Uddin</td>
+                                            <td>Forward</td>
+                                            <td>
+                                                <span class="player-stat">
+                                                    <i class="fas fa-futbol"></i>
+                                                    7 Goals
+                                                </span>
+                                                <span class="player-stat">
+                                                    <i class="fas fa-shoe-prints"></i>
+                                                    3 Assists
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>10</td>
+                                            <td>Sumon Mia</td>
+                                            <td>Midfielder</td>
+                                            <td>
+                                                <span class="player-stat">
+                                                    <i class="fas fa-futbol"></i>
+                                                    5 Goals
+                                                </span>
+                                                <span class="player-stat">
+                                                    <i class="fas fa-shoe-prints"></i>
+                                                    7 Assists
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>5</td>
+                                            <td>Shahin Alam</td>
+                                            <td>Defender</td>
+                                            <td>
+                                                <span class="player-stat">
+                                                    <i class="fas fa-shield-alt"></i>
+                                                    18 Tackles
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Team 3 -->
+                <div class="col-lg-6">
+                    <div class="team-card">
+                        <div class="team-header">
+                            <h4>Business Administration United</h4>
+                            <p><i class="fas fa-chart-line text-success me-1"></i> Rising Stars</p>
+                        </div>
+                        <div class="team-body">
+                            <div class="row g-3 mb-4">
+                                <div class="col-4 text-center">
+                                    <div class="bg-light rounded p-3">
+                                        <i class="fas fa-star text-warning mb-2"></i>
+                                        <h5 class="mb-0">20</h5>
+                                        <small class="text-muted">Points</small>
+                                    </div>
+                                </div>
+                                <div class="col-4 text-center">
+                                    <div class="bg-light rounded p-3">
+                                        <i class="fas fa-futbol text-success mb-2"></i>
+                                        <h5 class="mb-0">18</h5>
+                                        <small class="text-muted">Goals</small>
+                                    </div>
+                                </div>
+                                <div class="col-4 text-center">
+                                    <div class="bg-light rounded p-3">
+                                        <i class="fas fa-shield-alt text-danger mb-2"></i>
+                                        <h5 class="mb-0">15</h5>
+                                        <small class="text-muted">Conceded</small>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Team Formation -->
+                            <div class="team-formation mb-4">
+                                <h5 class="text-center mb-3">
+                                    <i class="fas fa-tactics me-2"></i>
+                                    Formation: 4-2-3-1
+                                </h5>
+                                <div class="formation-field">
+                                    <!-- Forward -->
+                                    <div class="player-row" style="padding-top: 20px;">
+                                        <div class="player-item">
+                                            <div class="player-dot">9</div>
+                                            <div class="player-name text-white">Sajid</div>
+                                        </div>
+                                    </div>
+                                    <!-- Attacking Midfielders -->
+                                    <div class="player-row" style="padding-top: 60px;">
+                                        <div class="player-item">
+                                            <div class="player-dot">7</div>
+                                            <div class="player-name text-white">Tareq</div>
+                                        </div>
+                                        <div class="player-item">
+                                            <div class="player-dot">10</div>
+                                            <div class="player-name text-white">Faisal</div>
+                                        </div>
+                                        <div class="player-item">
+                                            <div class="player-dot">11</div>
+                                            <div class="player-name text-white">Rakib</div>
+                                        </div>
+                                    </div>
+                                    <!-- Defensive Midfielders -->
+                                    <div class="player-row" style="padding-top: 80px;">
+                                        <div class="player-item">
+                                            <div class="player-dot">6</div>
+                                            <div class="player-name text-white">Asif</div>
+                                        </div>
+                                        <div class="player-item">
+                                            <div class="player-dot">8</div>
+                                            <div class="player-name text-white">Imran</div>
+                                        </div>
+                                    </div>
+                                    <!-- Defenders -->
+                                    <div class="player-row" style="padding-top: 80px;">
+                                        <div class="player-item">
+                                            <div class="player-dot">2</div>
+                                            <div class="player-name text-white">Nazmul</div>
+                                        </div>
+                                        <div class="player-item">
+                                            <div class="player-dot">4</div>
+                                            <div class="player-name text-white">Sabbir</div>
+                                        </div>
+                                        <div class="player-item">
+                                            <div class="player-dot">5</div>
+                                            <div class="player-name text-white">Rifat</div>
+                                        </div>
+                                        <div class="player-item">
+                                            <div class="player-dot">3</div>
+                                            <div class="player-name text-white">Mamun</div>
+                                        </div>
+                                    </div>
+                                    <!-- Goalkeeper -->
+                                    <div class="player-row justify-content-center" style="padding-top: 60px;">
+                                        <div class="player-item">
+                                            <div class="player-dot">1</div>
+                                            <div class="player-name text-white">Imran (GK)</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Team Players List -->
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Player</th>
+                                            <th>Position</th>
+                                            <th>Stats</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>Imran Hossain</td>
+                                            <td>Goalkeeper</td>
+                                            <td>
+                                                <span class="player-stat">
+                                                    <i class="fas fa-shield-alt"></i>
+                                                    3 Clean Sheets
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>9</td>
+                                            <td>Sajid Mahmud</td>
+                                            <td>Forward</td>
+                                            <td>
+                                                <span class="player-stat">
+                                                    <i class="fas fa-futbol"></i>
+                                                    9 Goals
+                                                </span>
+                                                <span class="player-stat">
+                                                    <i class="fas fa-shoe-prints"></i>
+                                                    2 Assists
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>10</td>
+                                            <td>Faisal Ahmed</td>
+                                            <td>Midfielder</td>
+                                            <td>
+                                                <span class="player-stat">
+                                                    <i class="fas fa-futbol"></i>
+                                                    4 Goals
+                                                </span>
+                                                <span class="player-stat">
+                                                    <i class="fas fa-shoe-prints"></i>
+                                                    6 Assists
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>4</td>
+                                            <td>Asif Iqbal</td>
+                                            <td>Defender</td>
+                                            <td>
+                                                <span class="player-stat">
+                                                    <i class="fas fa-shield-alt"></i>
+                                                    12 Tackles
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Team 4 -->
+                <div class="col-lg-6">
+                    <div class="team-card">
+                        <div class="team-header">
+                            <h4>English Department Lions</h4>
+                            <p><i class="fas fa-book text-info me-1"></i> Creative Playmakers</p>
+                        </div>
+                        <div class="team-body">
+                            <div class="row g-3 mb-4">
+                                <div class="col-4 text-center">
+                                    <div class="bg-light rounded p-3">
+                                        <i class="fas fa-star text-warning mb-2"></i>
+                                        <h5 class="mb-0">18</h5>
+                                        <small class="text-muted">Points</small>
+                                    </div>
+                                </div>
+                                <div class="col-4 text-center">
+                                    <div class="bg-light rounded p-3">
+                                        <i class="fas fa-futbol text-success mb-2"></i>
+                                        <h5 class="mb-0">15</h5>
+                                        <small class="text-muted">Goals</small>
+                                    </div>
+                                </div>
+                                <div class="col-4 text-center">
+                                    <div class="bg-light rounded p-3">
+                                        <i class="fas fa-shield-alt text-danger mb-2"></i>
+                                        <h5 class="mb-0">20</h5>
+                                        <small class="text-muted">Conceded</small>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Team Formation -->
+                            <div class="team-formation mb-4">
+                                <h5 class="text-center mb-3">
+                                    <i class="fas fa-tactics me-2"></i>
+                                    Formation: 3-5-2
+                                </h5>
+                                <div class="formation-field">
+                                    <!-- Forwards -->
+                                    <div class="player-row" style="padding-top: 20px;">
+                                        <div class="player-item">
+                                            <div class="player-dot">9</div>
+                                            <div class="player-name text-white">Anisur</div>
+                                        </div>
+                                        <div class="player-item">
+                                            <div class="player-dot">11</div>
+                                            <div class="player-name text-white">Sazzad</div>
+                                        </div>
+                                    </div>
+                                    <!-- Midfielders -->
+                                    <div class="player-row" style="padding-top: 80px;">
+                                        <div class="player-item">
+                                            <div class="player-dot">7</div>
+                                            <div class="player-name text-white">Rony</div>
+                                        </div>
+                                        <div class="player-item">
+                                            <div class="player-dot">8</div>
+                                            <div class="player-name text-white">Nasir</div>
+                                        </div>
+                                        <div class="player-item">
+                                            <div class="player-dot">10</div>
+                                            <div class="player-name text-white">Mamun</div>
+                                        </div>
+                                        <div class="player-item">
+                                            <div class="player-dot">12</div>
+                                            <div class="player-name text-white">Shafiq</div>
+                                        </div>
+                                        <div class="player-item">
+                                            <div class="player-dot">14</div>
+                                            <div class="player-name text-white">Kamal</div>
+                                        </div>
+                                    </div>
+                                    <!-- Defenders -->
+                                    <div class="player-row" style="padding-top: 80px;">
+                                        <div class="player-item">
+                                            <div class="player-dot">4</div>
+                                            <div class="player-name text-white">Rafiq</div>
+                                        </div>
+                                        <div class="player-item">
+                                            <div class="player-dot">5</div>
+                                            <div class="player-name text-white">Jahangir</div>
+                                        </div>
+                                        <div class="player-item">
+                                            <div class="player-dot">6</div>
+                                            <div class="player-name text-white">Salam</div>
+                                        </div>
+                                    </div>
+                                    <!-- Goalkeeper -->
+                                    <div class="player-row justify-content-center" style="padding-top: 60px;">
+                                        <div class="player-item">
+                                            <div class="player-dot">1</div>
+                                            <div class="player-name text-white">Shafiq (GK)</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Team Players List -->
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Player</th>
+                                            <th>Position</th>
+                                            <th>Stats</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>Shafiq Islam</td>
+                                            <td>Goalkeeper</td>
+                                            <td>
+                                                <span class="player-stat">
+                                                    <i class="fas fa-shield-alt"></i>
+                                                    2 Clean Sheets
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>9</td>
+                                            <td>Anisur Rahman</td>
+                                            <td>Forward</td>
+                                            <td>
+                                                <span class="player-stat">
+                                                    <i class="fas fa-futbol"></i>
+                                                    6 Goals
+                                                </span>
+                                                <span class="player-stat">
+                                                    <i class="fas fa-shoe-prints"></i>
+                                                    4 Assists
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>10</td>
+                                            <td>Mamun Or Rashid</td>
+                                            <td>Midfielder</td>
+                                            <td>
+                                                <span class="player-stat">
+                                                    <i class="fas fa-futbol"></i>
+                                                    3 Goals
+                                                </span>
+                                                <span class="player-stat">
+                                                    <i class="fas fa-shoe-prints"></i>
+                                                    5 Assists
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>5</td>
+                                            <td>Jahangir Alam</td>
+                                            <td>Defender</td>
+                                            <td>
+                                                <span class="player-stat">
+                                                    <i class="fas fa-shield-alt"></i>
+                                                    10 Tackles
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Upcoming Matches Section -->
+    <section id="upcoming" class="py-5">
+        <div class="container">
+            <div class="section-title">
+                <h2><i class="fas fa-calendar-alt me-2"></i>Upcoming Matches</h2>
+            </div>
+            <div class="row g-4">
+                <!-- Match 1 -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="match-card card h-100">
+                        <div class="match-header card-header bg-primary text-white text-center py-3">
+                            <h5 class="mb-1">Quarter Final</h5>
+                            <small>November 10, 2025</small>
+                        </div>
+                        <div class="match-body card-body">
+                            <div class="d-flex align-items-center justify-content-between mb-3">
+                                <div class="text-center">
+                                    <div class="team-logo-small" style="background-color: #0f1e5a;">
+                                        CSE
+                                    </div>
+                                    <h6>CSE Tigers</h6>
+                                </div>
+                                <div class="text-center">
+                                    <h4 class="text-muted">VS</h4>
+                                    <small class="text-primary fw-bold">3:00 PM</small>
+                                </div>
+                                <div class="text-center">
+                                    <div class="team-logo-small" style="background-color: #1e3a8a;">
+                                        EEE
+                                    </div>
+                                    <h6>EEE Warriors</h6>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <p class="mb-2">
+                                    <i class="fas fa-map-marker-alt text-danger me-2"></i>
+                                    EWU Main Ground
+                                </p>
+                                <a href="#" class="btn btn-outline-primary btn-sm">
+                                    <i class="fas fa-info-circle me-1"></i>
+                                    Match Details
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Match 2 -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="match-card card h-100">
+                        <div class="match-header card-header bg-primary text-white text-center py-3">
+                            <h5 class="mb-1">Quarter Final</h5>
+                            <small>November 12, 2025</small>
+                        </div>
+                        <div class="match-body card-body">
+                            <div class="d-flex align-items-center justify-content-between mb-3">
+                                <div class="text-center">
+                                    <div class="team-logo-small" style="background-color: #ef4444;">
+                                        BBA
+                                    </div>
+                                    <h6>BBA United</h6>
+                                </div>
+                                <div class="text-center">
+                                    <h4 class="text-muted">VS</h4>
+                                    <small class="text-primary fw-bold">4:30 PM</small>
+                                </div>
+                                <div class="text-center">
+                                    <div class="team-logo-small" style="background-color: #0f1e5a;">
+                                        CIV
+                                    </div>
+                                    <h6>Civil FC</h6>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <p class="mb-2">
+                                    <i class="fas fa-map-marker-alt text-danger me-2"></i>
+                                    EWU Main Ground
+                                </p>
+                                <a href="#" class="btn btn-outline-primary btn-sm">
+                                    <i class="fas fa-info-circle me-1"></i>
+                                    Match Details
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Match 3 -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="match-card card h-100">
+                        <div class="match-header card-header bg-primary text-white text-center py-3">
+                            <h5 class="mb-1">Quarter Final</h5>
+                            <small>November 15, 2025</small>
+                        </div>
+                        <div class="match-body card-body">
+                            <div class="d-flex align-items-center justify-content-between mb-3">
+                                <div class="text-center">
+                                    <div class="team-logo-small" style="background-color: #dc2626;">
+                                        TXT
+                                    </div>
+                                    <h6>Textile Stars</h6>
+                                </div>
+                                <div class="text-center">
+                                    <h4 class="text-muted">VS</h4>
+                                    <small class="text-primary fw-bold">3:30 PM</small>
+                                </div>
+                                <div class="text-center">
+                                    <div class="team-logo-small" style="background-color: #7e22ce;">
+                                        PHM
+                                    </div>
+                                    <h6>Pharmacy FC</h6>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <p class="mb-2">
+                                    <i class="fas fa-map-marker-alt text-danger me-2"></i>
+                                    EWU Main Ground
+                                </p>
+                                <a href="#" class="btn btn-outline-primary btn-sm">
+                                    <i class="fas fa-info-circle me-1"></i>
+                                    Match Details
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Venue Section -->
+    <section id="venue" class="py-5 bg-light">
+        <div class="container">
+            <div class="section-title">
+                <h2><i class="fas fa-map-marker-alt me-2"></i>Tournament Venue</h2>
+            </div>
+            <div class="venue-container">
+                <div class="venue-image">
+                    <img src="https://images.unsplash.com/photo-1517927033932-b3d18e7a6cf2?auto=format&fit=crop&w=1600&q=80" alt="EWU Football Ground">
+                </div>
+                <div class="venue-details">
+                    <h3>East West University Football Ground</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> A/2, Jahurul Islam Avenue, Jahurul Islam City, Aftabnagar, Dhaka-1212</p>
+                    <p><i class="fas fa-clock"></i> Matches will be held from 3:00 PM to 6:00 PM on scheduled days</p>
+                    <p><i class="fas fa-users"></i> Capacity: 500 spectators</p>
+                    <p><i class="fas fa-car"></i> Ample parking space available</p>
+                    <p><i class="fas fa-utensils"></i> Food and beverage stalls will be available</p>
+                    <p><i class="fas fa-ticket-alt"></i> Free entry for all EWU students and staff</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Rules Section -->
+    <section id="rules" class="py-5">
+        <div class="container">
+            <div class="section-title">
+                <h2><i class="fas fa-book me-2"></i>Tournament Rules</h2>
+            </div>
+            <div class="rules-container">
+                <ul class="rules-list">
+                    <li>Each match will consist of two halves of 30 minutes each</li>
+                    <li>Teams must have at least 7 players to start a match</li>
+                    <li>Maximum of 3 substitutions allowed per match</li>
+                    <li>Yellow card: warning, Red card: immediate ejection</li>
+                    <li>Group stage: 3 points for win, 1 for draw, 0 for loss</li>
+                    <li>Top two teams from each group advance to knockout stage</li>
+                    <li>In case of a tie in knockout stages, penalty shootout will decide</li>
+                    <li>All players must have valid EWU ID cards</li>
+                    <li>Referee decisions are final and binding</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>East West University</h3>
+                    <p><i class="fas fa-map-marker-alt me-2"></i> Jahurul Islam City, Aftabnagar, Dhaka-1212, Bangladesh</p>
+                    <p><i class="fas fa-phone me-2"></i> Phone: +880 2 989 4222</p>
+                    <p><i class="fas fa-envelope me-2"></i> Email: info@ewubd.edu</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <a href="#fixtures"><i class="fas fa-futbol me-2"></i>Fixtures</a>
+                    <a href="#teams"><i class="fas fa-users me-2"></i>Teams</a>
+                    <a href="#upcoming"><i class="fas fa-calendar-alt me-2"></i>Upcoming</a>
+                    <a href="#venue"><i class="fas fa-map-marker-alt me-2"></i>Venue</a>
+                    <a href="#rules"><i class="fas fa-book me-2"></i>Rules</a>
+                </div>
+                <div class="footer-column">
+                    <h3>Follow Us</h3>
+                    <p>Stay updated with the latest tournament news</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 East West University Football Tournament. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Add animation to cards on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = 1;
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all cards for animation
+        document.querySelectorAll('.fixture-card, .team-card, .match-card').forEach(card => {
+            card.style.opacity = 0;
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html>
