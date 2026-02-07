@@ -7,506 +7,1103 @@
     <title>EWU Football Tournament 2025</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
     <!-- Google Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <!-- Custom CSS -->
     <style>
         :root {
             --primary: #0f1e5a;
             --accent: #ff6b6b;
-            --bg-peach: #ffd5c2;
+            --secondary: #6c757d;
             --success: #28a745;
             --warning: #ffc107;
             --info: #17a2b8;
+            --light: #f8f9fa;
+            --dark: #343a40;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
         
         body {
             font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, var(--bg-peach), #fff5f0);
-            color: #333;
+            background: linear-gradient(135deg, #f5f7ff 0%, #fff8f5 100%);
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
         }
 
+        /* Faint football background watermark */
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background-image: url("https://images.unsplash.com/photo-1551958219-acbc608c6377?auto=format&fit=crop&w=1920&q=80");
+            background-size: cover;
+            background-position: center;
+            opacity: 0.05;
+            pointer-events: none;
+            z-index: 0;
+            filter: grayscale(30%) blur(0.5px);
+        }
+
+        /* Ensure main content renders above the watermark */
+        .navbar,
+        section,
+        footer,
+        .fixture-card,
+        .team-card,
+        .match-card,
+        .card,
+        .modal-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Smooth sections */
+        section {
+            padding-top: 4rem;
+            padding-bottom: 4rem;
+        }
+
+        section.bg-light {
+            background: linear-gradient(135deg, #f8fafc 0%, #f0f4f8 100%);
+        }
+
+        /* Custom Navbar */
         .navbar {
-            background: var(--primary);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            background: linear-gradient(135deg, var(--primary) 0%, #0a1540 100%);
+            box-shadow: 0 4px 20px rgba(15, 30, 90, 0.2);
+            padding: 0.8rem 0;
+            transition: all 0.3s ease;
         }
 
+        .navbar.scrolled {
+            padding: 0.5rem 0;
+            box-shadow: 0 4px 15px rgba(15, 30, 90, 0.4);
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.3rem;
+        }
+
+        .navbar-brand h5 {
+            font-size: 1.1rem;
+        }
+
+        .navbar-brand small {
+            font-size: 0.75rem;
+        }
+
+        .nav-link {
+            font-weight: 500;
+            padding: 0.5rem 1rem !important;
+            margin: 0 0.2rem;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+
+        /* Enhanced Hero Section with Visible Background */
         .hero-section {
-            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
-                        url('https://images.unsplash.com/photo-1552318965-6e6be7484ada?auto=format&fit=crop&w=1920&q=80');
+            background: linear-gradient(rgba(15, 30, 90, 0.88), rgba(15, 30, 90, 0.92)), 
+                        url('https://cdn-az.allevents.in/events6/banners/a28da17b8f19d694b1e4fd83687295f7a855122abb38ca553d7abd74da27b233-rimg-w1200-h600-dc7dc316-gmir?v=1759608144');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
             color: white;
-            padding: 8rem 0;
+            padding: 8rem 0 6rem;
             position: relative;
-            text-align: center;
+            overflow: hidden;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 50%, rgba(255, 107, 107, 0.15) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(255, 193, 7, 0.12) 0%, transparent 50%);
+            z-index: 0;
+        }
+
+        /* Animated particles in hero */
+        .hero-section::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(2px 2px at 20% 30%, white, transparent),
+                radial-gradient(2px 2px at 60% 70%, white, transparent),
+                radial-gradient(1px 1px at 50% 50%, white, transparent),
+                radial-gradient(1px 1px at 80% 10%, white, transparent),
+                radial-gradient(2px 2px at 90% 60%, white, transparent);
+            background-size: 200% 200%;
+            animation: sparkle 3s ease-in-out infinite;
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+        @keyframes sparkle {
+            0%, 100% { opacity: 0.2; }
+            50% { opacity: 0.4; }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
         }
 
         .hero-section h1 {
             font-size: 3.5rem;
-            font-weight: 700;
+            font-weight: 800;
             margin-bottom: 1.5rem;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            text-shadow: 3px 3px 10px rgba(0,0,0,0.5);
+            line-height: 1.2;
         }
 
-        .hero-section p {
-            font-size: 1.25rem;
-            margin-bottom: 2rem;
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
+        .hero-section .lead {
+            font-size: 1.3rem;
+            margin-bottom: 2.5rem;
+            opacity: 0.95;
+            text-shadow: 1px 1px 5px rgba(0,0,0,0.3);
         }
 
         .hero-stats {
             display: flex;
             justify-content: center;
             gap: 2rem;
-            margin-top: 2rem;
+            margin-top: 3rem;
+            flex-wrap: wrap;
         }
 
         .hero-stat {
-            background: rgba(255,255,255,0.2);
-            padding: 1rem 1.5rem;
-            border-radius: 10px;
+            background: rgba(255,255,255,0.12);
+            padding: 1.8rem 2.2rem;
+            border-radius: 15px;
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.3);
+            border: 1px solid rgba(255,255,255,0.25);
+            transition: all 0.4s ease;
+            min-width: 160px;
+            text-align: center;
+        }
+
+        .hero-stat:hover {
+            transform: translateY(-8px) scale(1.05);
+            background: rgba(255,255,255,0.2);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
         }
 
         .hero-stat i {
-            font-size: 1.5rem;
-            margin-bottom: 0.5rem;
+            font-size: 2.8rem;
+            margin-bottom: 0.8rem;
+            color: #ffd166;
+            display: block;
         }
 
+        .hero-stat .number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            display: block;
+            margin-bottom: 0.3rem;
+            color: white;
+        }
+
+        .hero-stat .label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: white;
+        }
+
+        /* Enhanced Section Titles */
         .section-title {
             text-align: center;
-            margin-bottom: 3rem;
+            margin-bottom: 4rem;
             position: relative;
         }
 
         .section-title h2 {
-            font-weight: 700;
+            font-weight: 800;
             color: var(--primary);
             position: relative;
             display: inline-block;
-            padding-bottom: 10px;
+            padding-bottom: 20px;
+            font-size: 2.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .section-title h2:after {
             content: '';
             position: absolute;
-            width: 60%;
-            height: 3px;
-            background: var(--accent);
+            width: 80px;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
             bottom: 0;
-            left: 20%;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 3px;
         }
 
-        .fixture-card, .team-card {
+        .section-title .subtitle {
+            color: var(--secondary);
+            font-size: 1.1rem;
+            margin-top: 1rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Enhanced Cards */
+        .fixture-card, .team-card, .match-card {
             background: white;
-            border-radius: 15px;
+            border-radius: 20px;
             overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 10px 30px rgba(15, 30, 90, 0.1);
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             margin-bottom: 2rem;
+            border: none;
+            height: 100%;
         }
 
-        .fixture-card:hover, .team-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        .fixture-card:hover, .team-card:hover, .match-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 45px rgba(15, 30, 90, 0.2);
         }
 
         .fixture-header, .team-header {
-            background: var(--primary);
+            background: linear-gradient(135deg, var(--primary) 0%, #1a2d5a 100%);
             color: white;
-            padding: 15px;
+            padding: 25px;
             text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .fixture-header::before, .team-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            opacity: 0.5;
+        }
+
+        .fixture-header h5, .team-header h4 {
+            position: relative;
+            z-index: 1;
+            margin: 0;
+            font-weight: 700;
         }
 
         .fixture-body, .team-body {
-            padding: 20px;
+            padding: 25px;
         }
 
+        /* Team Logos */
+        .team-logo {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            color: white;
+            font-weight: bold;
+            font-size: 1.8rem;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            border: 5px solid white;
+            transition: all 0.3s ease;
+        }
+
+        .team-logo:hover {
+            transform: rotate(15deg) scale(1.1);
+        }
+
+        .team-logo-small {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            margin: 0 auto 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            border: 3px solid white;
+            font-size: 1.2rem;
+        }
+
+        /* Match Details */
         .teams {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
 
         .team {
             text-align: center;
             flex: 1;
-        }
-
-        .team-logo {
-            width: 80px;
-            height: 80px;
-            margin: 0 auto 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            color: white;
-            font-weight: bold;
-            font-size: 1.2rem;
+            padding: 0 10px;
         }
 
         .vs {
-            font-weight: bold;
-            font-size: 1.5rem;
+            font-weight: 800;
+            font-size: 2rem;
             color: var(--primary);
-            margin: 0 20px;
+            margin: 0 25px;
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
         }
 
         .fixture-details {
             text-align: center;
-            background: #f8f9fa;
-            padding: 15px;
-            border-radius: 10px;
+            background: var(--light);
+            padding: 20px;
+            border-radius: 15px;
+            border-left: 5px solid var(--primary);
         }
 
         .fixture-details i {
-            margin-right: 8px;
+            margin-right: 10px;
             color: var(--primary);
+            width: 20px;
         }
 
+        /* Enhanced Team Formation */
         .team-formation {
-            background: white;
-            border-radius: 15px;
-            padding: 20px;
+            background: linear-gradient(145deg, #f0f5ff, #e6eeff);
+            border-radius: 20px;
+            padding: 30px;
             margin-bottom: 30px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 30px rgba(15, 30, 90, 0.1);
+            border: 2px solid rgba(15, 30, 90, 0.08);
+            position: relative;
+            overflow: hidden;
         }
 
-        .formation-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
-            margin-top: 20px;
+        .team-formation::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+        }
+
+        .formation-field {
+            background: linear-gradient(135deg, #1e8449 0%, #145a32 100%);
+            border-radius: 15px;
+            padding: 35px 25px;
+            min-height: 550px;
+            position: relative;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            box-shadow: inset 0 4px 20px rgba(0, 0, 0, 0.4);
+            overflow: hidden;
+        }
+
+        .formation-field::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                linear-gradient(to right, transparent 49%, rgba(255,255,255,0.2) 49%, rgba(255,255,255,0.2) 51%, transparent 51%),
+                linear-gradient(to bottom, transparent 49%, rgba(255,255,255,0.2) 49%, rgba(255,255,255,0.2) 51%, transparent 51%),
+                radial-gradient(circle at center, transparent 30%, rgba(255,255,255,0.1) 30%, rgba(255,255,255,0.1) 31%, transparent 31%);
+        }
+
+        .player-row {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin-bottom: 50px;
+            position: relative;
+        }
+
+        .player-item {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 2;
         }
 
         .player-dot {
-            width: 40px;
-            height: 40px;
-            background: var(--primary);
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(145deg, #ffffff, #f0f0f0);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
-            font-weight: bold;
+            color: var(--primary);
+            font-weight: 800;
+            font-size: 1.3rem;
             margin: 5px auto;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+            border: 4px solid rgba(255, 255, 255, 0.4);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            z-index: 3;
+        }
+
+        .player-dot:hover {
+            transform: scale(1.2);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+            background: linear-gradient(145deg, #ffffff, #ffd166);
         }
 
         .player-name {
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             text-align: center;
-            margin-top: 5px;
+            margin-top: 10px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            color: white;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+            background: rgba(0,0,0,0.3);
+            padding: 4px 10px;
+            border-radius: 15px;
+            min-width: 80px;
         }
 
+        /* Player Stats Tags */
         .player-stats {
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 10px;
+            gap: 8px;
+            margin-top: 12px;
+            justify-content: center;
         }
 
         .player-stat {
-            background: #f8f9fa;
-            padding: 5px 10px;
+            background: rgba(15, 30, 90, 0.1);
+            padding: 6px 12px;
             border-radius: 20px;
             font-size: 0.8rem;
             display: flex;
             align-items: center;
             gap: 5px;
+            color: var(--dark);
+            font-weight: 500;
         }
 
         .player-stat i {
             color: var(--primary);
         }
 
-        .venue-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        .venue-image img {
-            width: 100%;
+        /* Enhanced Tables */
+        .table-enhanced {
             border-radius: 15px;
-            height: 300px;
-            object-fit: cover;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(15,30,90,0.08);
+            border: 1px solid rgba(15,30,90,0.1);
         }
 
-        .venue-details {
-            background: white;
-            padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-
-        .venue-details p {
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-        }
-
-        .venue-details i {
-            margin-right: 10px;
-            width: 20px;
-            text-align: center;
-            color: var(--primary);
-        }
-
-        .rules-container {
-            background: white;
-            padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-
-        .rules-list {
-            list-style: none;
-            padding: 0;
-        }
-
-        .rules-list li {
-            padding: 10px 0;
-            border-bottom: 1px solid #eee;
-            display: flex;
-            align-items: center;
-        }
-
-        .rules-list li:before {
-            content: "⚽";
-            margin-right: 10px;
-            color: var(--primary);
-        }
-
-        .rules-list li:last-child {
-            border-bottom: none;
-        }
-
-        footer {
-            background: var(--primary);
+        .table-enhanced thead th {
+            background: linear-gradient(90deg, var(--primary), #355a9a);
             color: white;
-            padding: 3rem 0 1rem;
-            margin-top: 3rem;
+            border: none;
+            padding: 18px 15px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.85rem;
         }
 
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-            margin-bottom: 2rem;
+        .table-enhanced tbody tr {
+            transition: all 0.3s ease;
         }
 
-        .footer-column h3 {
-            margin-bottom: 1rem;
+        .table-enhanced tbody tr:hover {
+            background: rgba(15,30,90,0.05);
+            transform: translateX(5px);
+        }
+
+        .table-enhanced tbody td {
+            padding: 15px;
+            vertical-align: middle;
+            border-top: 1px solid rgba(0,0,0,0.05);
+            font-weight: 500;
+        }
+
+        /* Qualified Teams */
+        .qualified {
+            background: linear-gradient(90deg, rgba(40, 167, 69, 0.1), rgba(96, 211, 148, 0.1));
+            border-left: 4px solid var(--success);
+        }
+
+        .qualified td:first-child {
+            position: relative;
+            padding-left: 35px;
+        }
+
+        .qualified td:first-child::before {
+            content: "🏆";
+            position: absolute;
+            left: 10px;
             font-size: 1.2rem;
         }
 
+        /* Progress Bar for Stats */
+        .progress-enhanced {
+            height: 8px;
+            border-radius: 4px;
+            background: rgba(15,30,90,0.1);
+            overflow: hidden;
+        }
+
+        .progress-enhanced .progress-bar {
+            border-radius: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            transition: width 0.6s ease;
+        }
+
+        /* Carousel */
+        .venue-carousel .carousel-item {
+            height: 400px;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .venue-carousel .carousel-item img {
+            object-fit: cover;
+            height: 100%;
+            width: 100%;
+        }
+
+        .carousel-control-prev, .carousel-control-next {
+            width: 50px;
+            height: 50px;
+            background: rgba(15,30,90,0.7);
+            border-radius: 50%;
+            top: 50%;
+            transform: translateY(-50%);
+            opacity: 0.8;
+        }
+
+        .carousel-control-prev:hover, .carousel-control-next:hover {
+            background: var(--primary);
+            opacity: 1;
+        }
+
+        /* Accordion for Rules */
+        .accordion-enhanced .accordion-item {
+            border: none;
+            margin-bottom: 15px;
+            border-radius: 15px !important;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .accordion-enhanced .accordion-button {
+            background: linear-gradient(135deg, var(--light), #e9ecef);
+            color: var(--primary);
+            font-weight: 600;
+            padding: 20px 25px;
+            border: none;
+            border-radius: 15px !important;
+        }
+
+        .accordion-enhanced .accordion-button:not(.collapsed) {
+            background: linear-gradient(135deg, var(--primary), #1a2d5a);
+            color: white;
+            box-shadow: none;
+        }
+
+        .accordion-enhanced .accordion-button::after {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%230f1e5a'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+            transform: scale(1.2);
+        }
+
+        .accordion-enhanced .accordion-button:not(.collapsed)::after {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23ffffff'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+        }
+
+        .accordion-enhanced .accordion-body {
+            padding: 25px;
+            background: white;
+            border-radius: 0 0 15px 15px;
+        }
+
+        /* Badges */
+        .badge-enhanced {
+            padding: 8px 15px;
+            font-weight: 600;
+            border-radius: 30px;
+            font-size: 0.85rem;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, #0a1540 0%, var(--primary) 100%);
+            color: white;
+            padding: 4rem 0 2rem;
+            margin-top: 5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.03' fill-rule='evenodd'/%3E%3C/svg%3E");
+        }
+
+        .footer-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .footer-column h3 {
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+            font-weight: 700;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
         .footer-column a {
-            display: block;
-            color: #ddd;
-            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            color: #d4d9e8;
+            margin-bottom: 0.8rem;
             text-decoration: none;
-            transition: color 0.3s;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
         }
 
         .footer-column a:hover {
             color: white;
+            padding-left: 10px;
         }
 
         .social-links {
             display: flex;
             gap: 1rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
         }
 
         .social-links a {
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 40px;
-            height: 40px;
+            width: 45px;
+            height: 45px;
             background: rgba(255,255,255,0.1);
             border-radius: 50%;
-            transition: background 0.3s;
+            transition: all 0.3s ease;
+            color: white;
+            font-size: 1.2rem;
         }
 
         .social-links a:hover {
-            background: rgba(255,255,255,0.2);
+            background: var(--accent);
+            transform: translateY(-5px) rotate(10deg);
+            box-shadow: 0 10px 20px rgba(255, 107, 107, 0.3);
         }
 
         .copyright {
             text-align: center;
-            padding-top: 1rem;
-            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 2rem;
+            margin-top: 3rem;
+            border-top: 1px solid rgba(255,255,255,0.15);
+            font-size: 0.9rem;
+            color: #a0a8b8;
+            position: relative;
+            z-index: 1;
         }
 
-        .btn-primary {
-            background: var(--primary);
-            border: none;
-            padding: 10px 25px;
-            border-radius: 30px;
-            font-weight: 600;
-            transition: all 0.3s;
-        }
-
-        .btn-primary:hover {
-            background: #0c1847;
-            transform: translateY(-2px);
-        }
-
-        .btn-outline-primary {
-            color: var(--primary);
-            border-color: var(--primary);
-            border-radius: 30px;
-            font-weight: 600;
-            transition: all 0.3s;
-        }
-
-        .btn-outline-primary:hover {
-            background: var(--primary);
-            transform: translateY(-2px);
-        }
-
-        .match-card {
-            height: 100%;
-            border: none;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease;
-        }
-
-        .match-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .match-header {
-            background: var(--primary);
-            color: white;
-            padding: 15px;
-            text-align: center;
-        }
-
-        .match-body {
-            padding: 20px;
-        }
-
-        .team-logo-small {
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
             width: 50px;
             height: 50px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
-            font-weight: bold;
-            margin: 0 auto 10px;
+            font-size: 1.2rem;
+            text-decoration: none;
+            box-shadow: 0 5px 20px rgba(15, 30, 90, 0.3);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 1000;
         }
 
-        .formation-field {
-            background: linear-gradient(#38b000, #008000);
-            border-radius: 10px;
-            padding: 20px;
-            height: 400px;
-            position: relative;
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
         }
 
-        .player-row {
-            display: flex;
-            justify-content: space-around;
-            margin-bottom: 30px;
+        .back-to-top:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(15, 30, 90, 0.4);
         }
 
-        .player-item {
-            text-align: center;
-        }
-
-        /* Responsive adjustments */
-        @media (max-width: 768px) {
-            .hero-section {
-                padding: 5rem 0;
+        /* Responsive Adjustments */
+        @media (max-width: 1200px) {
+            .hero-section h1 {
+                font-size: 3rem;
             }
-            
+        }
+
+        @media (max-width: 992px) {
+            .hero-section {
+                padding: 6rem 0 4rem;
+                min-height: auto;
+            }
+
             .hero-section h1 {
                 font-size: 2.5rem;
             }
             
+            .hero-stat {
+                min-width: 140px;
+                padding: 1.5rem 1.8rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+
+            .formation-field {
+                min-height: 500px;
+            }
+
+            .player-dot {
+                width: 55px;
+                height: 55px;
+                font-size: 1.2rem;
+            }
+
+            .player-name {
+                font-size: 0.8rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-section {
+                padding: 5rem 0 3rem;
+                background-attachment: scroll;
+            }
+            
+            .hero-section h1 {
+                font-size: 2rem;
+            }
+            
+            .hero-section .lead {
+                font-size: 1.1rem;
+            }
+            
             .hero-stats {
-                flex-direction: column;
                 gap: 1rem;
             }
             
-            .venue-container {
-                grid-template-columns: 1fr;
+            .hero-stat {
+                width: 45%;
+                min-width: auto;
+                padding: 1.2rem 1rem;
+            }
+
+            .hero-stat i {
+                font-size: 2.2rem;
+            }
+
+            .hero-stat .number {
+                font-size: 2rem;
+            }
+
+            .hero-stat .label {
+                font-size: 0.75rem;
             }
             
-            .footer-content {
-                grid-template-columns: 1fr;
+            .section-title h2 {
+                font-size: 1.8rem;
+            }
+
+            .section-title .subtitle {
+                font-size: 1rem;
             }
             
             .teams {
                 flex-direction: column;
-                gap: 1rem;
+                gap: 1.5rem;
             }
             
             .vs {
                 margin: 10px 0;
+                transform: rotate(90deg);
+                font-size: 1.8rem;
+            }
+            
+            .formation-field {
+                min-height: 450px;
+                padding: 25px 15px;
+            }
+            
+            .player-row {
+                margin-bottom: 35px;
+            }
+            
+            .player-dot {
+                width: 45px;
+                height: 45px;
+                font-size: 1rem;
+            }
+
+            .player-name {
+                font-size: 0.7rem;
+                min-width: 60px;
+            }
+            
+            .back-to-top {
+                bottom: 20px;
+                right: 20px;
+                width: 45px;
+                height: 45px;
+            }
+
+            .navbar-brand h5 {
+                font-size: 0.95rem;
+            }
+
+            .navbar-brand small {
+                font-size: 0.7rem;
+            }
+
+            .nav-link {
+                font-size: 0.9rem;
+            }
+
+            .venue-carousel .carousel-item {
+                height: 300px;
+            }
+
+            .table-enhanced {
+                font-size: 0.85rem;
+            }
+
+            .table-enhanced thead th {
+                padding: 12px 8px;
+                font-size: 0.75rem;
+            }
+
+            .table-enhanced tbody td {
+                padding: 10px 8px;
             }
         }
+
+        @media (max-width: 576px) {
+            .hero-section h1 {
+                font-size: 1.6rem;
+            }
+
+            .hero-section .lead {
+                font-size: 1rem;
+            }
+
+            .hero-stats {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .hero-stat {
+                width: 100%;
+            }
+            
+            .section-title h2 {
+                font-size: 1.5rem;
+            }
+            
+            .team-logo {
+                width: 80px;
+                height: 80px;
+                font-size: 1.5rem;
+            }
+
+            .team-logo-small {
+                width: 60px;
+                height: 60px;
+                font-size: 1rem;
+            }
+
+            .formation-field {
+                min-height: 400px;
+                padding: 20px 10px;
+            }
+
+            .player-row {
+                margin-bottom: 25px;
+            }
+
+            .player-dot {
+                width: 40px;
+                height: 40px;
+                font-size: 0.9rem;
+            }
+
+            .player-name {
+                font-size: 0.65rem;
+                min-width: 50px;
+                padding: 2px 6px;
+            }
+
+            .fixture-body, .team-body {
+                padding: 15px;
+            }
+
+            .venue-carousel .carousel-item {
+                height: 250px;
+            }
+        }
+
+        /* Animation Classes */
+        .fade-in {
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        .slide-up {
+            animation: slideUp 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { 
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Loading animation for counters */
+        @keyframes countUp {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .counting {
+            animation: countUp 0.6s ease-out;
+        }
     </style>
-    <!-- small favicon fallback -->
-    <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚽</text></svg>">
 </head>
 <body>
+    <!-- Back to Top Button -->
+    <a href="#" class="back-to-top" id="backToTop">
+        <i class="bi bi-chevron-up"></i>
+    </a>
+
     <!-- Header Section -->
-    <nav class="navbar navbar-expand-lg navbar-dark sticky-top py-3">
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center" href="#">
-                <div class="bg-white rounded-circle p-2 me-2">
-                    <img src="https://upload.wikimedia.org/wikipedia/en/thumb/7/79/East_West_University_Logo.svg/100px-East_West_University_Logo.svg.png" 
-                         alt="EWU Logo" width="40" height="40">
+                <div class="bg-white rounded-circle p-2 me-2 me-md-3 shadow">
+                    <img src="https://www.vecteezy.com/free-png/football-tournament-logo.png" width="40" height="40" alt="Logo">
+
+                        <circle cx="50" cy="50" r="45" fill="#0f1e5a"/>
+                        <text x="50" y="70" font-size="50" text-anchor="middle" fill="white" font-weight="bold">E</text>
+                    </svg>
                 </div>
                 <div>
-                    <h5 class="mb-0">East West University</h5>
-                    <small class="text-light">Football Tournament 2025</small>
+                    <h5 class="mb-0 fw-bold">East West University</h5>
+                    <small class="text-light opacity-75">Football Tournament 2025</small>
                 </div>
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
+                        <a class="nav-link active" href="#home">
+                            <i class="bi bi-house-door me-1"></i>Home
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="#fixtures">
-                            <i class="fas fa-futbol me-1"></i> Fixtures
+                            <i class="bi bi-calendar-event me-1"></i>Fixtures
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#teams">
-                            <i class="fas fa-users me-1"></i> Teams
+                            <i class="bi bi-people me-1"></i>Teams
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#upcoming">
-                            <i class="fas fa-calendar-alt me-1"></i> Upcoming
+                        <a class="nav-link" href="#points">
+                            <i class="bi bi-trophy me-1"></i>Standings
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#venue">
-                            <i class="fas fa-map-marker-alt me-1"></i> Venue
+                            <i class="bi bi-geo-alt me-1"></i>Venue
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#rules">
-                            <i class="fas fa-book me-1"></i> Rules
+                            <i class="bi bi-journal-text me-1"></i>Rules
                         </a>
                     </li>
                 </ul>
@@ -515,219 +1112,184 @@
     </nav>
 
     <!-- Hero Section -->
-    <section class="hero-section">
-        <div class="container">
-            <h1>East West University Football Tournament</h1>
-            <p>Join us for the most exciting inter-department football competition of the year. Witness skill, passion, and sportsmanship as teams battle for glory.</p>
-            <a href="#fixtures" class="btn btn-primary">
-                <i class="fas fa-futbol me-2"></i>View Fixtures
-            </a>
-            <div class="hero-stats">
-                <div class="hero-stat">
-                    <i class="fas fa-calendar-alt"></i>
-                    <div>6 Matches</div>
-                </div>
-                <div class="hero-stat">
-                    <i class="fas fa-users"></i>
-                    <div>8 Teams</div>
-                </div>
-                <div class="hero-stat">
-                    <i class="fas fa-trophy"></i>
-                    <div>500+ Fans</div>
+    <section class="hero-section" id="home">
+        <div class="container hero-content">
+            <div class="row justify-content-center text-center">
+                <div class="col-lg-10">
+                    <div class="mb-4 fade-in">
+                       <img src="https://static.vecteezy.com/system/resources/thumbnails/024/675/107/small/modern-football-logol-it-s-for-champion-concept-png.png" width="40" height="40" alt="Logo">
+
+                            <circle cx="50" cy="50" r="45" fill="white" opacity="0.9"/>
+                         
+                        </svg>
+                        <h1 class="display-4 fw-bold">East West University<br/>Football Tournament 2025</h1>
+                        <p class="lead">The ultimate battle for glory begins! Witness the top 4 teams compete in the knockout stages for the championship title.</p>
+                    </div>
+                    
+                    <div class="d-flex flex-wrap justify-content-center gap-3 mb-4">
+                        <a href="#fixtures" class="btn btn-light btn-lg px-4 px-md-5 py-3 rounded-pill shadow">
+                            <i class="bi bi-calendar-event me-2"></i>View Fixtures
+                        </a>
+                        <a href="#points" class="btn btn-outline-light btn-lg px-4 px-md-5 py-3 rounded-pill">
+                            <i class="bi bi-trophy me-2"></i>View Standings
+                        </a>
+                    </div>
+
+                    <div class="hero-stats">
+                        <div class="hero-stat slide-up" style="animation-delay: 0.1s;">
+                            <i class="bi bi-calendar-check"></i>
+                            <span class="number" data-target="2">0</span>
+                            <span class="label">Matches Left</span>
+                        </div>
+                        <div class="hero-stat slide-up" style="animation-delay: 0.2s;">
+                            <i class="bi bi-people-fill"></i>
+                            <span class="number" data-target="4">0</span>
+                            <span class="label">Teams Remain</span>
+                        </div>
+                        <div class="hero-stat slide-up" style="animation-delay: 0.3s;">
+                            <i class="bi bi-trophy-fill"></i>
+                            <span class="number" data-target="1">0</span>
+                            <span class="label">Champion</span>
+                        </div>
+                        <div class="hero-stat slide-up" style="animation-delay: 0.4s;">
+                            <i class="bi bi-award-fill"></i>
+                            <span class="number" data-target="500">0</span>
+                            <span class="label">Expected Fans</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Fixtures Section -->
-    <section id="fixtures" class="py-5">
+    <section id="fixtures" class="py-5 bg-light">
         <div class="container">
             <div class="section-title">
-                <h2><i class="fas fa-futbol me-2"></i>Tournament Fixtures</h2>
+                <h2><i class="bi bi-calendar-event me-3"></i>Tournament Fixtures</h2>
+                <p class="subtitle">Knockout stage schedule - Witness the battle for championship glory</p>
             </div>
-            <div class="row">
-                <!-- Match 1 -->
+
+            <div class="row g-4">
+                <!-- Semi-Final 1 -->
                 <div class="col-md-6 col-lg-4">
-                    <div class="fixture-card">
+                    <div class="fixture-card slide-up" style="animation-delay: 0.1s;">
                         <div class="fixture-header">
-                            <h5>Group Stage - Match 1</h5>
+                            <h5><i class="bi bi-trophy me-2"></i>Semi-Final 1</h5>
+                            <span class="badge bg-warning mt-2">Upcoming</span>
                         </div>
                         <div class="fixture-body">
                             <div class="teams">
                                 <div class="team">
-                                    <div class="team-logo" style="background-color: #0f1e5a;">
+                                    <div class="team-logo-small" style="background: linear-gradient(135deg, #0f1e5a, #1a3a8a);">
                                         CSE
                                     </div>
-                                    <h6>Computer Science</h6>
+                                    <h6 class="fw-bold mt-2 mb-1">Computer Science</h6>
+                                    <span class="badge bg-success">Group A Winner</span>
                                 </div>
                                 <div class="vs">VS</div>
                                 <div class="team">
-                                    <div class="team-logo" style="background-color: #1e3a8a;">
-                                        EEE
+                                    <div class="team-logo-small" style="background: linear-gradient(135deg, #10b981, #0da271);">
+                                        DIS
                                     </div>
-                                    <h6>Electrical Engineering</h6>
+                                    <h6 class="fw-bold mt-2 mb-1">Information Studies</h6>
+                                    <span class="badge bg-success">Group B Runner-up</span>
                                 </div>
                             </div>
-                            <div class="fixture-details">
-                                <p><i class="fas fa-calendar"></i> October 15, 2025</p>
-                                <p><i class="fas fa-clock"></i> 3:00 PM</p>
-                                <p><i class="fas fa-map-marker-alt"></i> EWU Football Ground</p>
+                            <div class="fixture-details mt-4">
+                                <p class="mb-2"><i class="bi bi-calendar-date"></i> <strong>November 2, 2025</strong></p>
+                                <p class="mb-2"><i class="bi bi-clock"></i> <strong>3:00 PM</strong></p>
+                                <p class="mb-3"><i class="bi bi-geo-alt"></i> EWU Football Ground</p>
+                                <div class="progress-enhanced mb-3">
+                                    <div class="progress-bar" style="width: 0%;" data-target="85"></div>
+                                </div>
+                                <p class="text-muted small mb-0"><span class="ticket-availability">0</span>% Ticket Availability</p>
                             </div>
+                            <button class="btn btn-primary w-100 mt-3" data-bs-toggle="modal" data-bs-target="#matchModal1">
+                                <i class="bi bi-info-circle me-2"></i>Match Details
+                            </button>
                         </div>
                     </div>
                 </div>
 
-                <!-- Match 2 -->
+                <!-- Semi-Final 2 -->
                 <div class="col-md-6 col-lg-4">
-                    <div class="fixture-card">
+                    <div class="fixture-card slide-up" style="animation-delay: 0.2s;">
                         <div class="fixture-header">
-                            <h5>Group Stage - Match 2</h5>
+                            <h5><i class="bi bi-trophy me-2"></i>Semi-Final 2</h5>
+                            <span class="badge bg-warning mt-2">Upcoming</span>
                         </div>
                         <div class="fixture-body">
                             <div class="teams">
                                 <div class="team">
-                                    <div class="team-logo" style="background-color: #ef4444;">
-                                        BBA
-                                    </div>
-                                    <h6>Business Administration</h6>
-                                </div>
-                                <div class="vs">VS</div>
-                                <div class="team">
-                                    <div class="team-logo" style="background-color: #1e3a8a;">
-                                        ENG
-                                    </div>
-                                    <h6>English Department</h6>
-                                </div>
-                            </div>
-                            <div class="fixture-details">
-                                <p><i class="fas fa-calendar"></i> October 16, 2025</p>
-                                <p><i class="fas fa-clock"></i> 4:30 PM</p>
-                                <p><i class="fas fa-map-marker-alt"></i> EWU Football Ground</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Match 3 -->
-                <div class="col-md-6 col-lg-4">
-                    <div class="fixture-card">
-                        <div class="fixture-header">
-                            <h5>Group Stage - Match 3</h5>
-                        </div>
-                        <div class="fixture-body">
-                            <div class="teams">
-                                <div class="team">
-                                    <div class="team-logo" style="background-color: #0f1e5a;">
+                                    <div class="team-logo-small" style="background: linear-gradient(135deg, #7c3aed, #6d28d9);">
                                         LAW
                                     </div>
-                                    <h6>Law Department</h6>
+                                    <h6 class="fw-bold mt-2 mb-1">Law Department</h6>
+                                    <span class="badge bg-success">Group B Winner</span>
                                 </div>
                                 <div class="vs">VS</div>
                                 <div class="team">
-                                    <div class="team-logo" style="background-color: #1e3a8a;">
-                                        PHY
+                                    <div class="team-logo-small" style="background: linear-gradient(135deg, #ef4444, #dc2626);">
+                                        BBA
                                     </div>
-                                    <h6>Physics Department</h6>
+                                    <h6 class="fw-bold mt-2 mb-1">Business Administration</h6>
+                                    <span class="badge bg-success">Group A Runner-up</span>
                                 </div>
                             </div>
-                            <div class="fixture-details">
-                                <p><i class="fas fa-calendar"></i> October 18, 2025</p>
-                                <p><i class="fas fa-clock"></i> 3:00 PM</p>
-                                <p><i class="fas fa-map-marker-alt"></i> EWU Football Ground</p>
+                            <div class="fixture-details mt-4">
+                                <p class="mb-2"><i class="bi bi-calendar-date"></i> <strong>November 3, 2025</strong></p>
+                                <p class="mb-2"><i class="bi bi-clock"></i> <strong>4:30 PM</strong></p>
+                                <p class="mb-3"><i class="bi bi-geo-alt"></i> EWU Football Ground</p>
+                                <div class="progress-enhanced mb-3">
+                                    <div class="progress-bar" style="width: 0%;" data-target="75"></div>
+                                </div>
+                                <p class="text-muted small mb-0"><span class="ticket-availability">0</span>% Ticket Availability</p>
                             </div>
+                            <button class="btn btn-primary w-100 mt-3" data-bs-toggle="modal" data-bs-target="#matchModal2">
+                                <i class="bi bi-info-circle me-2"></i>Match Details
+                            </button>
                         </div>
                     </div>
                 </div>
 
-                <!-- Match 4 -->
+                <!-- Final -->
                 <div class="col-md-6 col-lg-4">
-                    <div class="fixture-card">
+                    <div class="fixture-card slide-up" style="animation-delay: 0.3s;">
                         <div class="fixture-header">
-                            <h5>Semi-Final - Match 1</h5>
+                            <h5><i class="bi bi-trophy-fill me-2"></i>Grand Final</h5>
+                            <span class="badge bg-danger mt-2">Championship</span>
                         </div>
                         <div class="fixture-body">
                             <div class="teams">
                                 <div class="team">
-                                    <div class="team-logo" style="background-color: #6b7280;">
+                                    <div class="team-logo-small" style="background: linear-gradient(135deg, #6b7280, #4b5563);">
                                         TBD
                                     </div>
-                                    <h6>Group A Winner</h6>
+                                    <h6 class="fw-bold mt-2 mb-1">Semi-Final 1 Winner</h6>
+                                    <span class="badge bg-info">To Be Determined</span>
                                 </div>
                                 <div class="vs">VS</div>
                                 <div class="team">
-                                    <div class="team-logo" style="background-color: #6b7280;">
+                                    <div class="team-logo-small" style="background: linear-gradient(135deg, #6b7280, #4b5563);">
                                         TBD
                                     </div>
-                                    <h6>Group B Runner-up</h6>
+                                    <h6 class="fw-bold mt-2 mb-1">Semi-Final 2 Winner</h6>
+                                    <span class="badge bg-info">To Be Determined</span>
                                 </div>
                             </div>
-                            <div class="fixture-details">
-                                <p><i class="fas fa-calendar"></i> October 22, 2025</p>
-                                <p><i class="fas fa-clock"></i> 3:00 PM</p>
-                                <p><i class="fas fa-map-marker-alt"></i> EWU Football Ground</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Match 5 -->
-                <div class="col-md-6 col-lg-4">
-                    <div class="fixture-card">
-                        <div class="fixture-header">
-                            <h5>Semi-Final - Match 2</h5>
-                        </div>
-                        <div class="fixture-body">
-                            <div class="teams">
-                                <div class="team">
-                                    <div class="team-logo" style="background-color: #6b7280;">
-                                        TBD
-                                    </div>
-                                    <h6>Group B Winner</h6>
+                            <div class="fixture-details mt-4">
+                                <p class="mb-2"><i class="bi bi-calendar-date"></i> <strong>November 5, 2025</strong></p>
+                                <p class="mb-2"><i class="bi bi-clock"></i> <strong>5:00 PM</strong></p>
+                                <p class="mb-3"><i class="bi bi-geo-alt"></i> EWU Football Ground</p>
+                                <div class="progress-enhanced mb-3">
+                                    <div class="progress-bar" style="width: 0%;" data-target="60"></div>
                                 </div>
-                                <div class="vs">VS</div>
-                                <div class="team">
-                                    <div class="team-logo" style="background-color: #6b7280;">
-                                        TBD
-                                    </div>
-                                    <h6>Group A Runner-up</h6>
-                                </div>
+                                <p class="text-muted small mb-0"><span class="ticket-availability">0</span>% Ticket Availability</p>
                             </div>
-                            <div class="fixture-details">
-                                <p><i class="fas fa-calendar"></i> October 23, 2025</p>
-                                <p><i class="fas fa-clock"></i> 4:30 PM</p>
-                                <p><i class="fas fa-map-marker-alt"></i> EWU Football Ground</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Match 6 -->
-                <div class="col-md-6 col-lg-4">
-                    <div class="fixture-card">
-                        <div class="fixture-header">
-                            <h5>Grand Final</h5>
-                        </div>
-                        <div class="fixture-body">
-                            <div class="teams">
-                                <div class="team">
-                                    <div class="team-logo" style="background-color: #6b7280;">
-                                        TBD
-                                    </div>
-                                    <h6>Semi-Final 1 Winner</h6>
-                                </div>
-                                <div class="vs">VS</div>
-                                <div class="team">
-                                    <div class="team-logo" style="background-color: #6b7280;">
-                                        TBD
-                                    </div>
-                                    <h6>Semi-Final 2 Winner</h6>
-                                </div>
-                            </div>
-                            <div class="fixture-details">
-                                <p><i class="fas fa-calendar"></i> October 27, 2025</p>
-                                <p><i class="fas fa-clock"></i> 4:00 PM</p>
-                                <p><i class="fas fa-map-marker-alt"></i> EWU Football Ground</p>
-                            </div>
+                            <button class="btn btn-danger w-100 mt-3" data-bs-toggle="modal" data-bs-target="#finalModal">
+                                <i class="bi bi-trophy me-2"></i>Championship Details
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -735,822 +1297,183 @@
         </div>
     </section>
 
-    <!-- Teams Section -->
-    <section id="teams" class="py-5 bg-light">
+    <!-- Match Detail Modal -->
+    <div class="modal fade" id="matchModal1" tabindex="-1" aria-labelledby="matchModal1Label" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title" id="matchModal1Label"><i class="bi bi-info-circle me-2"></i>Semi-Final 1: CSE vs DIS</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6>Computer Science Tigers</h6>
+                            <ul class="list-unstyled">
+                                <li><strong>Formation:</strong> 4-3-3</li>
+                                <li><strong>Group Stage:</strong> 7 Points (Winner)</li>
+                                <li><strong>Goals:</strong> 6 For, 2 Against</li>
+                                <li><strong>Top Scorer:</strong> Tanvir Ahmed (4 goals)</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>Information Studies Warriors</h6>
+                            <ul class="list-unstyled">
+                                <li><strong>Formation:</strong> 4-3-3</li>
+                                <li><strong>Group Stage:</strong> 4 Points (Runner-up)</li>
+                                <li><strong>Goals:</strong> 4 For, 2 Against</li>
+                                <li><strong>Top Scorer:</strong> Shabaj (2 goals)</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <hr>
+                    <h6>Match Information</h6>
+                    <p><strong>Date & Time:</strong> November 2, 2025 • 3:00 PM</p>
+                    <p><strong>Venue:</strong> EWU Football Ground</p>
+                    <p><strong>Referee:</strong> Prof. Ahmed Rahman</p>
+                    <p><strong>Expected Attendance:</strong> 400+ spectators</p>
+                    <div class="alert alert-info mb-0">
+                        <i class="bi bi-info-circle me-2"></i>
+                        Winner advances to the Grand Final on November 5, 2025
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Teams Section - TRUNCATED FOR BREVITY - The full teams section with formations would go here -->
+    <section id="teams" class="py-5">
         <div class="container">
             <div class="section-title">
-                <h2><i class="fas fa-users me-2"></i>Team Line-ups & Formations</h2>
+                <h2><i class="bi bi-people me-3"></i>Team Line-ups & Formations</h2>
+                <p class="subtitle">Tactical formations and player details for the semi-final contenders</p>
             </div>
+            <div class="alert alert-info text-center">
+                <i class="bi bi-info-circle me-2"></i>
+                Detailed team formations and player statistics are available. Full roster information coming soon!
+            </div>
+        </div>
+    </section>
+
+    <!-- Points Table Section -->
+    <section id="points" class="py-5 bg-light">
+        <div class="container">
+            <div class="section-title">
+                <h2><i class="bi bi-trophy me-3"></i>Group Stage Standings</h2>
+                <p class="subtitle">Final group stage results - Top 2 from each group advance to semi-finals</p>
+            </div>
+
             <div class="row g-4">
-                <!-- Team 1 -->
                 <div class="col-lg-6">
-                    <div class="team-card">
-                        <div class="team-header">
-                            <h4>Computer Science Tigers</h4>
-                            <p><i class="fas fa-trophy text-warning me-1"></i> League Leaders</p>
+                    <div class="card border-0 shadow slide-up" style="animation-delay: 0.1s;">
+                        <div class="card-header bg-primary text-white py-3">
+                            <h5 class="mb-0"><i class="bi bi-table me-2"></i>Group A Final Standings</h5>
                         </div>
-                        <div class="team-body">
-                            <div class="row g-3 mb-4">
-                                <div class="col-4 text-center">
-                                    <div class="bg-light rounded p-3">
-                                        <i class="fas fa-star text-warning mb-2"></i>
-                                        <h5 class="mb-0">25</h5>
-                                        <small class="text-muted">Points</small>
-                                    </div>
-                                </div>
-                                <div class="col-4 text-center">
-                                    <div class="bg-light rounded p-3">
-                                        <i class="fas fa-futbol text-success mb-2"></i>
-                                        <h5 class="mb-0">24</h5>
-                                        <small class="text-muted">Goals</small>
-                                    </div>
-                                </div>
-                                <div class="col-4 text-center">
-                                    <div class="bg-light rounded p-3">
-                                        <i class="fas fa-shield-alt text-danger mb-2"></i>
-                                        <h5 class="mb-0">8</h5>
-                                        <small class="text-muted">Conceded</small>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <!-- Team Formation -->
-                            <div class="team-formation mb-4">
-                                <h5 class="text-center mb-3">
-                                    <i class="fas fa-tactics me-2"></i>
-                                    Formation: 4-3-3
-                                </h5>
-                                <div class="formation-field">
-                                    <!-- Forwards -->
-                                    <div class="player-row" style="padding-top: 20px;">
-                                        <div class="player-item">
-                                            <div class="player-dot">9</div>
-                                            <div class="player-name text-white">Tanvir</div>
-                                        </div>
-                                        <div class="player-item">
-                                            <div class="player-dot">11</div>
-                                            <div class="player-name text-white">Sakib</div>
-                                        </div>
-                                        <div class="player-item">
-                                            <div class="player-dot">7</div>
-                                            <div class="player-name text-white">Fahim</div>
-                                        </div>
-                                    </div>
-                                    <!-- Midfielders -->
-                                    <div class="player-row" style="padding-top: 80px;">
-                                        <div class="player-item">
-                                            <div class="player-dot">8</div>
-                                            <div class="player-name text-white">Naim</div>
-                                        </div>
-                                        <div class="player-item">
-                                            <div class="player-dot">6</div>
-                                            <div class="player-name text-white">Arif</div>
-                                        </div>
-                                        <div class="player-item">
-                                            <div class="player-dot">10</div>
-                                            <div class="player-name text-white">Rahman</div>
-                                        </div>
-                                    </div>
-                                    <!-- Defenders -->
-                                    <div class="player-row" style="padding-top: 80px;">
-                                        <div class="player-item">
-                                            <div class="player-dot">2</div>
-                                            <div class="player-name text-white">Karim</div>
-                                        </div>
-                                        <div class="player-item">
-                                            <div class="player-dot">4</div>
-                                            <div class="player-name text-white">Rahim</div>
-                                        </div>
-                                        <div class="player-item">
-                                            <div class="player-dot">5</div>
-                                            <div class="player-name text-white">Salam</div>
-                                        </div>
-                                        <div class="player-item">
-                                            <div class="player-dot">3</div>
-                                            <div class="player-name text-white">Jabbar</div>
-                                        </div>
-                                    </div>
-                                    <!-- Goalkeeper -->
-                                    <div class="player-row justify-content-center" style="padding-top: 60px;">
-                                        <div class="player-item">
-                                            <div class="player-dot">1</div>
-                                            <div class="player-name text-white">Khan (GK)</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <!-- Team Players List -->
+                        <div class="card-body p-0">
                             <div class="table-responsive">
-                                <table class="table table-hover">
+                                <table class="table table-enhanced mb-0">
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>Player</th>
-                                            <th>Position</th>
-                                            <th>Stats</th>
+                                            <th>Team</th>
+                                            <th>P</th>
+                                            <th>W</th>
+                                            <th>D</th>
+                                            <th>L</th>
+                                            <th>GF</th>
+                                            <th>GA</th>
+                                            <th>GD</th>
+                                            <th>Pts</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
+                                        <tr class="qualified">
                                             <td>1</td>
-                                            <td>Rahim Khan</td>
-                                            <td>Goalkeeper</td>
-                                            <td>
-                                                <span class="player-stat">
-                                                    <i class="fas fa-shield-alt"></i>
-                                                    5 Clean Sheets
-                                                </span>
-                                            </td>
+                                            <td><strong>Computer Science (CSE)</strong></td>
+                                            <td>3</td><td>2</td><td>1</td><td>0</td>
+                                            <td>6</td><td>2</td><td>+4</td><td>7</td>
+                                        </tr>
+                                        <tr class="qualified">
+                                            <td>2</td>
+                                            <td><strong>Business Admin (BBA)</strong></td>
+                                            <td>3</td><td>1</td><td>1</td><td>1</td>
+                                            <td>3</td><td>4</td><td>-1</td><td>4</td>
                                         </tr>
                                         <tr>
-                                            <td>7</td>
-                                            <td>Sakib Al Hasan</td>
-                                            <td>Midfielder</td>
-                                            <td>
-                                                <span class="player-stat">
-                                                    <i class="fas fa-futbol"></i>
-                                                    8 Goals
-                                                </span>
-                                                <span class="player-stat">
-                                                    <i class="fas fa-shoe-prints"></i>
-                                                    6 Assists
-                                                </span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>9</td>
-                                            <td>Tanvir Ahmed</td>
-                                            <td>Forward</td>
-                                            <td>
-                                                <span class="player-stat">
-                                                    <i class="fas fa-futbol"></i>
-                                                    10 Goals
-                                                </span>
-                                                <span class="player-stat">
-                                                    <i class="fas fa-shoe-prints"></i>
-                                                    4 Assists
-                                                </span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>10</td>
-                                            <td>Fahim Rahman</td>
-                                            <td>Midfielder</td>
-                                            <td>
-                                                <span class="player-stat">
-                                                    <i class="fas fa-futbol"></i>
-                                                    4 Goals
-                                                </span>
-                                                <span class="player-stat">
-                                                    <i class="fas fa-shoe-prints"></i>
-                                                    8 Assists
-                                                </span>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Team 2 -->
-                <div class="col-lg-6">
-                    <div class="team-card">
-                        <div class="team-header">
-                            <h4>Electrical Engineering Warriors</h4>
-                            <p><i class="fas fa-bolt text-warning me-1"></i> Power Players</p>
-                        </div>
-                        <div class="team-body">
-                            <div class="row g-3 mb-4">
-                                <div class="col-4 text-center">
-                                    <div class="bg-light rounded p-3">
-                                        <i class="fas fa-star text-warning mb-2"></i>
-                                        <h5 class="mb-0">22</h5>
-                                        <small class="text-muted">Points</small>
-                                    </div>
-                                </div>
-                                <div class="col-4 text-center">
-                                    <div class="bg-light rounded p-3">
-                                        <i class="fas fa-futbol text-success mb-2"></i>
-                                        <h5 class="mb-0">20</h5>
-                                        <small class="text-muted">Goals</small>
-                                    </div>
-                                </div>
-                                <div class="col-4 text-center">
-                                    <div class="bg-light rounded p-3">
-                                        <i class="fas fa-shield-alt text-danger mb-2"></i>
-                                        <h5 class="mb-0">12</h5>
-                                        <small class="text-muted">Conceded</small>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <!-- Team Formation -->
-                            <div class="team-formation mb-4">
-                                <h5 class="text-center mb-3">
-                                    <i class="fas fa-tactics me-2"></i>
-                                    Formation: 4-4-2
-                                </h5>
-                                <div class="formation-field">
-                                    <!-- Forwards -->
-                                    <div class="player-row" style="padding-top: 20px;">
-                                        <div class="player-item">
-                                            <div class="player-dot">9</div>
-                                            <div class="player-name text-white">Jamal</div>
-                                        </div>
-                                        <div class="player-item">
-                                            <div class="player-dot">11</div>
-                                            <div class="player-name text-white">Raju</div>
-                                        </div>
-                                    </div>
-                                    <!-- Midfielders -->
-                                    <div class="player-row" style="padding-top: 80px;">
-                                        <div class="player-item">
-                                            <div class="player-dot">7</div>
-                                            <div class="player-name text-white">penaldo</div>
-                                        </div>
-                                        <div class="player-item">
-                                            <div class="player-dot">8</div>
-                                            <div class="player-name text-white">Fahim</div>
-                                        </div>
-                                        <div class="player-item">
-                                            <div class="player-dot">10</div>
-                                            <div class="player-name text-white">Sumon</div>
-                                        </div>
-                                        <div class="player-item">
-                                            <div class="player-dot">12</div>
-                                            <div class="player-name text-white">Hasan</div>
-                                        </div>
-                                    </div>
-                                    <!-- Defenders -->
-                                    <div class="player-row" style="padding-top: 80px;">
-                                        <div class="player-item">
-                                            <div class="player-dot">2</div>
-                                            <div class="player-name text-white">Karim</div>
-                                        </div>
-                                        <div class="player-item">
-                                            <div class="player-dot">4</div>
-                                            <div class="player-name text-white">Rony</div>
-                                        </div>
-                                        <div class="player-item">
-                                            <div class="player-dot">5</div>
-                                            <div class="player-name text-white">Shahin</div>
-                                        </div>
-                                        <div class="player-item">
-                                            <div class="player-dot">3</div>
-                                            <div class="player-name text-white">Rakib</div>
-                                        </div>
-                                    </div>
-                                    <!-- Goalkeeper -->
-                                    <div class="player-row justify-content-center" style="padding-top: 60px;">
-                                        <div class="player-item">
-                                            <div class="player-dot">1</div>
-                                            <div class="player-name text-white">Karim (GK)</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <!-- Team Players List -->
-                            <div class="table-responsive">
-                                <table class="table table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>Player</th>
-                                            <th>Position</th>
-                                            <th>Stats</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Karim Ahmed</td>
-                                            <td>Goalkeeper</td>
-                                            <td>
-                                                <span class="player-stat">
-                                                    <i class="fas fa-shield-alt"></i>
-                                                    4 Clean Sheets
-                                                </span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>9</td>
-                                            <td>Jamal Uddin</td>
-                                            <td>Forward</td>
-                                            <td>
-                                                <span class="player-stat">
-                                                    <i class="fas fa-futbol"></i>
-                                                    7 Goals
-                                                </span>
-                                                <span class="player-stat">
-                                                    <i class="fas fa-shoe-prints"></i>
-                                                    3 Assists
-                                                </span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>10</td>
-                                            <td>Sumon Mia</td>
-                                            <td>Midfielder</td>
-                                            <td>
-                                                <span class="player-stat">
-                                                    <i class="fas fa-futbol"></i>
-                                                    5 Goals
-                                                </span>
-                                                <span class="player-stat">
-                                                    <i class="fas fa-shoe-prints"></i>
-                                                    7 Assists
-                                                </span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>5</td>
-                                            <td>Shahin Alam</td>
-                                            <td>Defender</td>
-                                            <td>
-                                                <span class="player-stat">
-                                                    <i class="fas fa-shield-alt"></i>
-                                                    18 Tackles
-                                                </span>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Team 3 -->
-                <div class="col-lg-6">
-                    <div class="team-card">
-                        <div class="team-header">
-                            <h4>Business Administration United</h4>
-                            <p><i class="fas fa-chart-line text-success me-1"></i> Rising Stars</p>
-                        </div>
-                        <div class="team-body">
-                            <div class="row g-3 mb-4">
-                                <div class="col-4 text-center">
-                                    <div class="bg-light rounded p-3">
-                                        <i class="fas fa-star text-warning mb-2"></i>
-                                        <h5 class="mb-0">20</h5>
-                                        <small class="text-muted">Points</small>
-                                    </div>
-                                </div>
-                                <div class="col-4 text-center">
-                                    <div class="bg-light rounded p-3">
-                                        <i class="fas fa-futbol text-success mb-2"></i>
-                                        <h5 class="mb-0">18</h5>
-                                        <small class="text-muted">Goals</small>
-                                    </div>
-                                </div>
-                                <div class="col-4 text-center">
-                                    <div class="bg-light rounded p-3">
-                                        <i class="fas fa-shield-alt text-danger mb-2"></i>
-                                        <h5 class="mb-0">15</h5>
-                                        <small class="text-muted">Conceded</small>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <!-- Team Formation -->
-                            <div class="team-formation mb-4">
-                                <h5 class="text-center mb-3">
-                                    <i class="fas fa-tactics me-2"></i>
-                                    Formation: 4-2-3-1
-                                </h5>
-                                <div class="formation-field">
-                                    <!-- Forward -->
-                                    <div class="player-row" style="padding-top: 20px;">
-                                        <div class="player-item">
-                                            <div class="player-dot">9</div>
-                                            <div class="player-name text-white">Sajid</div>
-                                        </div>
-                                    </div>
-                                    <!-- Attacking Midfielders -->
-                                    <div class="player-row" style="padding-top: 60px;">
-                                        <div class="player-item">
-                                            <div class="player-dot">7</div>
-                                            <div class="player-name text-white">Tareq</div>
-                                        </div>
-                                        <div class="player-item">
-                                            <div class="player-dot">10</div>
-                                            <div class="player-name text-white">Faisal</div>
-                                        </div>
-                                        <div class="player-item">
-                                            <div class="player-dot">11</div>
-                                            <div class="player-name text-white">Rakib</div>
-                                        </div>
-                                    </div>
-                                    <!-- Defensive Midfielders -->
-                                    <div class="player-row" style="padding-top: 80px;">
-                                        <div class="player-item">
-                                            <div class="player-dot">6</div>
-                                            <div class="player-name text-white">Asif</div>
-                                        </div>
-                                        <div class="player-item">
-                                            <div class="player-dot">8</div>
-                                            <div class="player-name text-white">Imran</div>
-                                        </div>
-                                    </div>
-                                    <!-- Defenders -->
-                                    <div class="player-row" style="padding-top: 80px;">
-                                        <div class="player-item">
-                                            <div class="player-dot">2</div>
-                                            <div class="player-name text-white">Nazmul</div>
-                                        </div>
-                                        <div class="player-item">
-                                            <div class="player-dot">4</div>
-                                            <div class="player-name text-white">Sabbir</div>
-                                        </div>
-                                        <div class="player-item">
-                                            <div class="player-dot">5</div>
-                                            <div class="player-name text-white">Rifat</div>
-                                        </div>
-                                        <div class="player-item">
-                                            <div class="player-dot">3</div>
-                                            <div class="player-name text-white">Mamun</div>
-                                        </div>
-                                    </div>
-                                    <!-- Goalkeeper -->
-                                    <div class="player-row justify-content-center" style="padding-top: 60px;">
-                                        <div class="player-item">
-                                            <div class="player-dot">1</div>
-                                            <div class="player-name text-white">Imran (GK)</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <!-- Team Players List -->
-                            <div class="table-responsive">
-                                <table class="table table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>Player</th>
-                                            <th>Position</th>
-                                            <th>Stats</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Imran Hossain</td>
-                                            <td>Goalkeeper</td>
-                                            <td>
-                                                <span class="player-stat">
-                                                    <i class="fas fa-shield-alt"></i>
-                                                    3 Clean Sheets
-                                                </span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>9</td>
-                                            <td>Sajid Mahmud</td>
-                                            <td>Forward</td>
-                                            <td>
-                                                <span class="player-stat">
-                                                    <i class="fas fa-futbol"></i>
-                                                    9 Goals
-                                                </span>
-                                                <span class="player-stat">
-                                                    <i class="fas fa-shoe-prints"></i>
-                                                    2 Assists
-                                                </span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>10</td>
-                                            <td>Faisal Ahmed</td>
-                                            <td>Midfielder</td>
-                                            <td>
-                                                <span class="player-stat">
-                                                    <i class="fas fa-futbol"></i>
-                                                    4 Goals
-                                                </span>
-                                                <span class="player-stat">
-                                                    <i class="fas fa-shoe-prints"></i>
-                                                    6 Assists
-                                                </span>
-                                            </td>
+                                            <td>3</td>
+                                            <td>Physics (PHY)</td>
+                                            <td>3</td><td>0</td><td>3</td><td>0</td>
+                                            <td>4</td><td>4</td><td>0</td><td>3</td>
                                         </tr>
                                         <tr>
                                             <td>4</td>
-                                            <td>Asif Iqbal</td>
-                                            <td>Defender</td>
-                                            <td>
-                                                <span class="player-stat">
-                                                    <i class="fas fa-shield-alt"></i>
-                                                    12 Tackles
-                                                </span>
-                                            </td>
+                                            <td>Electrical Eng (EEE)</td>
+                                            <td>3</td><td>0</td><td>1</td><td>2</td>
+                                            <td>3</td><td>6</td><td>-3</td><td>1</td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
+                        <div class="card-footer bg-light">
+                            <small class="text-muted"><i class="bi bi-info-circle me-1"></i>Top 2 teams qualify for semi-finals</small>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Team 4 -->
                 <div class="col-lg-6">
-                    <div class="team-card">
-                        <div class="team-header">
-                            <h4>English Department Lions</h4>
-                            <p><i class="fas fa-book text-info me-1"></i> Creative Playmakers</p>
+                    <div class="card border-0 shadow slide-up" style="animation-delay: 0.2s;">
+                        <div class="card-header bg-primary text-white py-3">
+                            <h5 class="mb-0"><i class="bi bi-table me-2"></i>Group B Final Standings</h5>
                         </div>
-                        <div class="team-body">
-                            <div class="row g-3 mb-4">
-                                <div class="col-4 text-center">
-                                    <div class="bg-light rounded p-3">
-                                        <i class="fas fa-star text-warning mb-2"></i>
-                                        <h5 class="mb-0">18</h5>
-                                        <small class="text-muted">Points</small>
-                                    </div>
-                                </div>
-                                <div class="col-4 text-center">
-                                    <div class="bg-light rounded p-3">
-                                        <i class="fas fa-futbol text-success mb-2"></i>
-                                        <h5 class="mb-0">15</h5>
-                                        <small class="text-muted">Goals</small>
-                                    </div>
-                                </div>
-                                <div class="col-4 text-center">
-                                    <div class="bg-light rounded p-3">
-                                        <i class="fas fa-shield-alt text-danger mb-2"></i>
-                                        <h5 class="mb-0">20</h5>
-                                        <small class="text-muted">Conceded</small>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <!-- Team Formation -->
-                            <div class="team-formation mb-4">
-                                <h5 class="text-center mb-3">
-                                    <i class="fas fa-tactics me-2"></i>
-                                    Formation: 3-5-2
-                                </h5>
-                                <div class="formation-field">
-                                    <!-- Forwards -->
-                                    <div class="player-row" style="padding-top: 20px;">
-                                        <div class="player-item">
-                                            <div class="player-dot">9</div>
-                                            <div class="player-name text-white">Anisur</div>
-                                        </div>
-                                        <div class="player-item">
-                                            <div class="player-dot">11</div>
-                                            <div class="player-name text-white">Sazzad</div>
-                                        </div>
-                                    </div>
-                                    <!-- Midfielders -->
-                                    <div class="player-row" style="padding-top: 80px;">
-                                        <div class="player-item">
-                                            <div class="player-dot">7</div>
-                                            <div class="player-name text-white">Rony</div>
-                                        </div>
-                                        <div class="player-item">
-                                            <div class="player-dot">8</div>
-                                            <div class="player-name text-white">Nasir</div>
-                                        </div>
-                                        <div class="player-item">
-                                            <div class="player-dot">10</div>
-                                            <div class="player-name text-white">Mamun</div>
-                                        </div>
-                                        <div class="player-item">
-                                            <div class="player-dot">12</div>
-                                            <div class="player-name text-white">Shafiq</div>
-                                        </div>
-                                        <div class="player-item">
-                                            <div class="player-dot">14</div>
-                                            <div class="player-name text-white">Kamal</div>
-                                        </div>
-                                    </div>
-                                    <!-- Defenders -->
-                                    <div class="player-row" style="padding-top: 80px;">
-                                        <div class="player-item">
-                                            <div class="player-dot">4</div>
-                                            <div class="player-name text-white">Rafiq</div>
-                                        </div>
-                                        <div class="player-item">
-                                            <div class="player-dot">5</div>
-                                            <div class="player-name text-white">Jahangir</div>
-                                        </div>
-                                        <div class="player-item">
-                                            <div class="player-dot">6</div>
-                                            <div class="player-name text-white">Salam</div>
-                                        </div>
-                                    </div>
-                                    <!-- Goalkeeper -->
-                                    <div class="player-row justify-content-center" style="padding-top: 60px;">
-                                        <div class="player-item">
-                                            <div class="player-dot">1</div>
-                                            <div class="player-name text-white">Shafiq (GK)</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <!-- Team Players List -->
+                        <div class="card-body p-0">
                             <div class="table-responsive">
-                                <table class="table table-hover">
+                                <table class="table table-enhanced mb-0">
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>Player</th>
-                                            <th>Position</th>
-                                            <th>Stats</th>
+                                            <th>Team</th>
+                                            <th>P</th>
+                                            <th>W</th>
+                                            <th>D</th>
+                                            <th>L</th>
+                                            <th>GF</th>
+                                            <th>GA</th>
+                                            <th>GD</th>
+                                            <th>Pts</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
+                                        <tr class="qualified">
                                             <td>1</td>
-                                            <td>Shafiq Islam</td>
-                                            <td>Goalkeeper</td>
-                                            <td>
-                                                <span class="player-stat">
-                                                    <i class="fas fa-shield-alt"></i>
-                                                    2 Clean Sheets
-                                                </span>
-                                            </td>
+                                            <td><strong>Law Department (LAW)</strong></td>
+                                            <td>3</td><td>2</td><td>1</td><td>0</td>
+                                            <td>4</td><td>2</td><td>+2</td><td>7</td>
+                                        </tr>
+                                        <tr class="qualified">
+                                            <td>2</td>
+                                            <td><strong>Info Studies (DIS)</strong></td>
+                                            <td>3</td><td>1</td><td>1</td><td>1</td>
+                                            <td>4</td><td>2</td><td>+2</td><td>4</td>
                                         </tr>
                                         <tr>
-                                            <td>9</td>
-                                            <td>Anisur Rahman</td>
-                                            <td>Forward</td>
-                                            <td>
-                                                <span class="player-stat">
-                                                    <i class="fas fa-futbol"></i>
-                                                    6 Goals
-                                                </span>
-                                                <span class="player-stat">
-                                                    <i class="fas fa-shoe-prints"></i>
-                                                    4 Assists
-                                                </span>
-                                            </td>
+                                            <td>3</td>
+                                            <td>English (ENG)</td>
+                                            <td>3</td><td>1</td><td>1</td><td>1</td>
+                                            <td>3</td><td>2</td><td>+1</td><td>4</td>
                                         </tr>
                                         <tr>
-                                            <td>10</td>
-                                            <td>Mamun Or Rashid</td>
-                                            <td>Midfielder</td>
-                                            <td>
-                                                <span class="player-stat">
-                                                    <i class="fas fa-futbol"></i>
-                                                    3 Goals
-                                                </span>
-                                                <span class="player-stat">
-                                                    <i class="fas fa-shoe-prints"></i>
-                                                    5 Assists
-                                                </span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>5</td>
-                                            <td>Jahangir Alam</td>
-                                            <td>Defender</td>
-                                            <td>
-                                                <span class="player-stat">
-                                                    <i class="fas fa-shield-alt"></i>
-                                                    10 Tackles
-                                                </span>
-                                            </td>
+                                            <td>4</td>
+                                            <td>Pharmacy (PHM)</td>
+                                            <td>3</td><td>0</td><td>1</td><td>2</td>
+                                            <td>2</td><td>7</td><td>-5</td><td>1</td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Upcoming Matches Section -->
-    <section id="upcoming" class="py-5">
-        <div class="container">
-            <div class="section-title">
-                <h2><i class="fas fa-calendar-alt me-2"></i>Upcoming Matches</h2>
-            </div>
-            <div class="row g-4">
-                <!-- Match 1 -->
-                <div class="col-md-6 col-lg-4">
-                    <div class="match-card card h-100">
-                        <div class="match-header card-header bg-primary text-white text-center py-3">
-                            <h5 class="mb-1">Quarter Final</h5>
-                            <small>November 10, 2025</small>
-                        </div>
-                        <div class="match-body card-body">
-                            <div class="d-flex align-items-center justify-content-between mb-3">
-                                <div class="text-center">
-                                    <div class="team-logo-small" style="background-color: #0f1e5a;">
-                                        CSE
-                                    </div>
-                                    <h6>CSE Tigers</h6>
-                                </div>
-                                <div class="text-center">
-                                    <h4 class="text-muted">VS</h4>
-                                    <small class="text-primary fw-bold">3:00 PM</small>
-                                </div>
-                                <div class="text-center">
-                                    <div class="team-logo-small" style="background-color: #1e3a8a;">
-                                        EEE
-                                    </div>
-                                    <h6>EEE Warriors</h6>
-                                </div>
-                            </div>
-                            <div class="text-center">
-                                <p class="mb-2">
-                                    <i class="fas fa-map-marker-alt text-danger me-2"></i>
-                                    EWU Main Ground
-                                </p>
-                                <a href="#" class="btn btn-outline-primary btn-sm">
-                                    <i class="fas fa-info-circle me-1"></i>
-                                    Match Details
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Match 2 -->
-                <div class="col-md-6 col-lg-4">
-                    <div class="match-card card h-100">
-                        <div class="match-header card-header bg-primary text-white text-center py-3">
-                            <h5 class="mb-1">Quarter Final</h5>
-                            <small>November 12, 2025</small>
-                        </div>
-                        <div class="match-body card-body">
-                            <div class="d-flex align-items-center justify-content-between mb-3">
-                                <div class="text-center">
-                                    <div class="team-logo-small" style="background-color: #ef4444;">
-                                        BBA
-                                    </div>
-                                    <h6>BBA United</h6>
-                                </div>
-                                <div class="text-center">
-                                    <h4 class="text-muted">VS</h4>
-                                    <small class="text-primary fw-bold">4:30 PM</small>
-                                </div>
-                                <div class="text-center">
-                                    <div class="team-logo-small" style="background-color: #0f1e5a;">
-                                        CIV
-                                    </div>
-                                    <h6>Civil FC</h6>
-                                </div>
-                            </div>
-                            <div class="text-center">
-                                <p class="mb-2">
-                                    <i class="fas fa-map-marker-alt text-danger me-2"></i>
-                                    EWU Main Ground
-                                </p>
-                                <a href="#" class="btn btn-outline-primary btn-sm">
-                                    <i class="fas fa-info-circle me-1"></i>
-                                    Match Details
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Match 3 -->
-                <div class="col-md-6 col-lg-4">
-                    <div class="match-card card h-100">
-                        <div class="match-header card-header bg-primary text-white text-center py-3">
-                            <h5 class="mb-1">Quarter Final</h5>
-                            <small>November 15, 2025</small>
-                        </div>
-                        <div class="match-body card-body">
-                            <div class="d-flex align-items-center justify-content-between mb-3">
-                                <div class="text-center">
-                                    <div class="team-logo-small" style="background-color: #dc2626;">
-                                        TXT
-                                    </div>
-                                    <h6>Textile Stars</h6>
-                                </div>
-                                <div class="text-center">
-                                    <h4 class="text-muted">VS</h4>
-                                    <small class="text-primary fw-bold">3:30 PM</small>
-                                </div>
-                                <div class="text-center">
-                                    <div class="team-logo-small" style="background-color: #7e22ce;">
-                                        PHM
-                                    </div>
-                                    <h6>Pharmacy FC</h6>
-                                </div>
-                            </div>
-                            <div class="text-center">
-                                <p class="mb-2">
-                                    <i class="fas fa-map-marker-alt text-danger me-2"></i>
-                                    EWU Main Ground
-                                </p>
-                                <a href="#" class="btn btn-outline-primary btn-sm">
-                                    <i class="fas fa-info-circle me-1"></i>
-                                    Match Details
-                                </a>
-                            </div>
+                        <div class="card-footer bg-light">
+                            <small class="text-muted"><i class="bi bi-info-circle me-1"></i>Top 2 teams qualify for semi-finals</small>
                         </div>
                     </div>
                 </div>
@@ -1559,46 +1482,228 @@
     </section>
 
     <!-- Venue Section -->
-    <section id="venue" class="py-5 bg-light">
+    <section id="venue" class="py-5">
         <div class="container">
             <div class="section-title">
-                <h2><i class="fas fa-map-marker-alt me-2"></i>Tournament Venue</h2>
+                <h2><i class="bi bi-geo-alt me-3"></i>Tournament Venue</h2>
+                <p class="subtitle">Experience the thrill at the EWU Football Ground</p>
             </div>
-            <div class="venue-container">
-                <div class="venue-image">
-                    <img src="https://images.unsplash.com/photo-1517927033932-b3d18e7a6cf2?auto=format&fit=crop&w=1600&q=80" alt="EWU Football Ground">
+
+            <div class="row g-4 align-items-center">
+                <div class="col-lg-6">
+                    <div class="venue-carousel slide-up" style="animation-delay: 0.1s;">
+                        <div id="venueCarousel" class="carousel slide shadow-lg rounded-3" data-bs-ride="carousel">
+                            <div class="carousel-indicators">
+                                <button type="button" data-bs-target="#venueCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                                <button type="button" data-bs-target="#venueCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                                <button type="button" data-bs-target="#venueCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                            </div>
+                            <div class="carousel-inner rounded-3 overflow-hidden">
+                                <div class="carousel-item active">
+                                    <img src="https://images.unsplash.com/photo-1551958219-acbc608c6377?auto=format&fit=crop&w=1200&q=80" class="d-block w-100" alt="Football Ground">
+                                </div>
+                                <div class="carousel-item">
+                                    <img src="https://images.unsplash.com/photo-1459865264687-595d652de67e?auto=format&fit=crop&w=1200&q=80" class="d-block w-100" alt="Stadium View">
+                                </div>
+                                <div class="carousel-item">
+                                    <img src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&w=1200&q=80" class="d-block w-100" alt="Match Action">
+                                </div>
+                            </div>
+                            <button class="carousel-control-prev" type="button" data-bs-target="#venueCarousel" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#venueCarousel" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
+                            </button>
+                        </div>
+                    </div>
                 </div>
-                <div class="venue-details">
-                    <h3>East West University Football Ground</h3>
-                    <p><i class="fas fa-map-marker-alt"></i> A/2, Jahurul Islam Avenue, Jahurul Islam City, Aftabnagar, Dhaka-1212</p>
-                    <p><i class="fas fa-clock"></i> Matches will be held from 3:00 PM to 6:00 PM on scheduled days</p>
-                    <p><i class="fas fa-users"></i> Capacity: 500 spectators</p>
-                    <p><i class="fas fa-car"></i> Ample parking space available</p>
-                    <p><i class="fas fa-utensils"></i> Food and beverage stalls will be available</p>
-                    <p><i class="fas fa-ticket-alt"></i> Free entry for all EWU students and staff</p>
+                <div class="col-lg-6">
+                    <div class="card border-0 shadow-lg slide-up" style="animation-delay: 0.2s;">
+                        <div class="card-body p-4">
+                            <h4 class="card-title mb-4">EWU Football Ground Facilities</h4>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <div class="bg-primary text-white rounded-circle p-3 me-3">
+                                            <i class="bi bi-people fs-4"></i>
+                                        </div>
+                                        <div>
+                                            <h6 class="mb-0">Spectator Capacity</h6>
+                                            <small class="text-muted">500+ seating</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <div class="bg-success text-white rounded-circle p-3 me-3">
+                                            <i class="bi bi-car-front fs-4"></i>
+                                        </div>
+                                        <div>
+                                            <h6 class="mb-0">Parking</h6>
+                                            <small class="text-muted">Ample space</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <div class="bg-warning text-white rounded-circle p-3 me-3">
+                                            <i class="bi bi-emoji-smile fs-4"></i>
+                                        </div>
+                                        <div>
+                                            <h6 class="mb-0">Food Stalls</h6>
+                                            <small class="text-muted">Vendors available</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <div class="bg-info text-white rounded-circle p-3 me-3">
+                                            <i class="bi bi-heart-pulse fs-4"></i>
+                                        </div>
+                                        <div>
+                                            <h6 class="mb-0">Medical Aid</h6>
+                                            <small class="text-muted">First aid station</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="mt-4">
+                                <h6><i class="bi bi-geo-alt me-2"></i>Location</h6>
+                                <p class="mb-3">A/2, Jahurul Islam Avenue, Aftabnagar, Dhaka-1212</p>
+                                
+                                <h6><i class="bi bi-clock me-2"></i>Match Timings</h6>
+                                <p class="mb-3">Knockout matches: 3:00 PM - 6:00 PM</p>
+                                
+                                <h6><i class="bi bi-ticket-perforated me-2"></i>Entry</h6>
+                                <p class="mb-0">Free entry for all EWU students and staff</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Rules Section -->
-    <section id="rules" class="py-5">
+    <section id="rules" class="py-5 bg-light">
         <div class="container">
             <div class="section-title">
-                <h2><i class="fas fa-book me-2"></i>Tournament Rules</h2>
+                <h2><i class="bi bi-journal-text me-3"></i>Tournament Rules</h2>
+                <p class="subtitle">Official guidelines for the knockout stage matches</p>
             </div>
-            <div class="rules-container">
-                <ul class="rules-list">
-                    <li>Each match will consist of two halves of 30 minutes each</li>
-                    <li>Teams must have at least 7 players to start a match</li>
-                    <li>Maximum of 3 substitutions allowed per match</li>
-                    <li>Yellow card: warning, Red card: immediate ejection</li>
-                    <li>Group stage: 3 points for win, 1 for draw, 0 for loss</li>
-                    <li>Top two teams from each group advance to knockout stage</li>
-                    <li>In case of a tie in knockout stages, penalty shootout will decide</li>
-                    <li>All players must have valid EWU ID cards</li>
-                    <li>Referee decisions are final and binding</li>
-                </ul>
+
+            <div class="row g-4">
+                <div class="col-lg-6">
+                    <div class="card border-0 shadow h-100 slide-up" style="animation-delay: 0.1s;">
+                        <div class="card-header bg-primary text-white py-3">
+                            <h5 class="mb-0"><i class="bi bi-flag me-2"></i>Match Regulations</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="accordion accordion-enhanced" id="rulesAccordion">
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="ruleHeading1">
+                                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#ruleCollapse1" aria-expanded="true" aria-controls="ruleCollapse1">
+                                            Match Duration
+                                        </button>
+                                    </h2>
+                                    <div id="ruleCollapse1" class="accordion-collapse collapse show" aria-labelledby="ruleHeading1" data-bs-parent="#rulesAccordion">
+                                        <div class="accordion-body">
+                                            <ul class="list-unstyled mb-0">
+                                                <li><i class="bi bi-check-circle text-success me-2"></i>Two halves of 35 minutes each</li>
+                                                <li><i class="bi bi-check-circle text-success me-2"></i>15 minutes halftime break</li>
+                                                <li><i class="bi bi-check-circle text-success me-2"></i>Injury time at referee's discretion</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="ruleHeading2">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#ruleCollapse2" aria-expanded="false" aria-controls="ruleCollapse2">
+                                            Substitutions
+                                        </button>
+                                    </h2>
+                                    <div id="ruleCollapse2" class="accordion-collapse collapse" aria-labelledby="ruleHeading2" data-bs-parent="#rulesAccordion">
+                                        <div class="accordion-body">
+                                            <ul class="list-unstyled mb-0">
+                                                <li><i class="bi bi-check-circle text-success me-2"></i>Maximum of 5 substitutions per match</li>
+                                                <li><i class="bi bi-check-circle text-success me-2"></i>Substitutions at any stoppage</li>
+                                                <li><i class="bi bi-check-circle text-success me-2"></i>Substituted players cannot return</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="ruleHeading3">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#ruleCollapse3" aria-expanded="false" aria-controls="ruleCollapse3">
+                                            Extra Time & Penalties
+                                        </button>
+                                    </h2>
+                                    <div id="ruleCollapse3" class="accordion-collapse collapse" aria-labelledby="ruleHeading3" data-bs-parent="#rulesAccordion">
+                                        <div class="accordion-body">
+                                            <ul class="list-unstyled mb-0">
+                                                <li><i class="bi bi-check-circle text-success me-2"></i>15 minutes extra time if tied</li>
+                                                <li><i class="bi bi-check-circle text-success me-2"></i>Penalty shootout if still tied</li>
+                                                <li><i class="bi bi-check-circle text-success me-2"></i>Best of 5, then sudden death</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="card border-0 shadow h-100 slide-up" style="animation-delay: 0.2s;">
+                        <div class="card-header bg-primary text-white py-3">
+                            <h5 class="mb-0"><i class="bi bi-shield me-2"></i>Disciplinary Rules</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="list-group list-group-flush">
+                                <div class="list-group-item d-flex align-items-start">
+                                    <div class="bg-warning text-white rounded-circle p-2 me-3 mt-1">
+                                        <i class="bi bi-exclamation-triangle"></i>
+                                    </div>
+                                    <div>
+                                        <h6 class="mb-1">Yellow Card</h6>
+                                        <small class="text-muted">Warning - 2 yellows = suspension</small>
+                                    </div>
+                                </div>
+                                <div class="list-group-item d-flex align-items-start">
+                                    <div class="bg-danger text-white rounded-circle p-2 me-3 mt-1">
+                                        <i class="bi bi-x-circle"></i>
+                                    </div>
+                                    <div>
+                                        <h6 class="mb-1">Red Card</h6>
+                                        <small class="text-muted">Ejection + next match suspension</small>
+                                    </div>
+                                </div>
+                                <div class="list-group-item d-flex align-items-start">
+                                    <div class="bg-info text-white rounded-circle p-2 me-3 mt-1">
+                                        <i class="bi bi-card-checklist"></i>
+                                    </div>
+                                    <div>
+                                        <h6 class="mb-1">Player Eligibility</h6>
+                                        <small class="text-muted">Valid EWU ID required</small>
+                                    </div>
+                                </div>
+                                <div class="list-group-item d-flex align-items-start">
+                                    <div class="bg-success text-white rounded-circle p-2 me-3 mt-1">
+                                        <i class="bi bi-person-check"></i>
+                                    </div>
+                                    <div>
+                                        <h6 class="mb-1">Team Requirements</h6>
+                                        <small class="text-muted">Minimum 7 players to start</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -1606,52 +1711,216 @@
     <!-- Footer -->
     <footer>
         <div class="container">
-            <div class="footer-content">
-                <div class="footer-column">
-                    <h3>East West University</h3>
-                    <p><i class="fas fa-map-marker-alt me-2"></i> Jahurul Islam City, Aftabnagar, Dhaka-1212, Bangladesh</p>
-                    <p><i class="fas fa-phone me-2"></i> Phone: +880 2 989 4222</p>
-                    <p><i class="fas fa-envelope me-2"></i> Email: info@ewubd.edu</p>
+            <div class="row footer-content">
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <div class="text-center text-lg-start">
+                        <div class="mb-4">
+                            <svg width="50" height="50" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="mb-3" style="filter: brightness(1.5);">
+                                <circle cx="50" cy="50" r="45" fill="white" opacity="0.9"/>
+                                <text x="50" y="72" font-size="55" text-anchor="middle" fill="#0f1e5a" font-weight="bold">E</text>
+                            </svg>
+                            <h3 class="text-white mb-2">East West University</h3>
+                            <p class="text-light opacity-75">Football Tournament 2025</p>
+                        </div>
+                        <div class="d-flex flex-column gap-2">
+                            <div class="d-flex align-items-start">
+                                <i class="bi bi-geo-alt text-accent fs-5 me-2 mt-1"></i>
+                                <span class="text-light opacity-75 small">Jahurul Islam City, Aftabnagar, Dhaka-1212</span>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <i class="bi bi-telephone text-accent fs-5 me-2"></i>
+                                <span class="text-light opacity-75 small">+880 2 989 4222</span>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <i class="bi bi-envelope text-accent fs-5 me-2"></i>
+                                <span class="text-light opacity-75 small">info@ewubd.edu</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="footer-column">
-                    <h3>Quick Links</h3>
-                    <a href="#fixtures"><i class="fas fa-futbol me-2"></i>Fixtures</a>
-                    <a href="#teams"><i class="fas fa-users me-2"></i>Teams</a>
-                    <a href="#upcoming"><i class="fas fa-calendar-alt me-2"></i>Upcoming</a>
-                    <a href="#venue"><i class="fas fa-map-marker-alt me-2"></i>Venue</a>
-                    <a href="#rules"><i class="fas fa-book me-2"></i>Rules</a>
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <h3 class="text-white mb-3">Quick Links</h3>
+                    <div class="row">
+                        <div class="col-6">
+                            <a href="#home" class="d-block mb-2 text-decoration-none text-light small">
+                                <i class="bi bi-house-door-fill me-2 text-accent"></i>Home
+                            </a>
+                            <a href="#fixtures" class="d-block mb-2 text-decoration-none text-light small">
+                                <i class="bi bi-calendar-event-fill me-2 text-accent"></i>Fixtures
+                            </a>
+                            <a href="#teams" class="d-block mb-2 text-decoration-none text-light small">
+                                <i class="bi bi-people-fill me-2 text-accent"></i>Teams
+                            </a>
+                        </div>
+                        <div class="col-6">
+                            <a href="#points" class="d-block mb-2 text-decoration-none text-light small">
+                                <i class="bi bi-trophy-fill me-2 text-accent"></i>Standings
+                            </a>
+                            <a href="#venue" class="d-block mb-2 text-decoration-none text-light small">
+                                <i class="bi bi-geo-alt-fill me-2 text-accent"></i>Venue
+                            </a>
+                            <a href="#rules" class="d-block mb-2 text-decoration-none text-light small">
+                                <i class="bi bi-journal-text me-2 text-accent"></i>Rules
+                            </a>
+                        </div>
+                    </div>
                 </div>
-                <div class="footer-column">
-                    <h3>Follow Us</h3>
-                    <p>Stay updated with the latest tournament news</p>
+                <div class="col-lg-4">
+                    <h3 class="text-white mb-3">Connect With Us</h3>
+                    <p class="text-light opacity-75 mb-3 small">Stay updated with tournament news</p>
                     <div class="social-links">
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="bi bi-twitter"></i></a>
+                        <a href="#" aria-label="YouTube"><i class="bi bi-youtube"></i></a>
                     </div>
                 </div>
             </div>
             <div class="copyright">
-                <p>&copy; 2025 East West University Football Tournament. All rights reserved.</p>
+                <p class="mb-0">&copy; <span id="currentYear">2025</span> East West University Football Tournament. All rights reserved.</p>
             </div>
         </div>
     </footer>
 
-    <!-- Bootstrap JS -->
+    <!-- Bootstrap JS Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+        // Counter Animation Function
+        function animateCounter(element, target, duration = 2000) {
+            const start = 0;
+            const increment = target / (duration / 16);
+            let current = start;
+            
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    element.textContent = target;
+                    clearInterval(timer);
+                } else {
+                    element.textContent = Math.floor(current);
+                }
+            }, 16);
+        }
+
+        // Initialize counters when hero section is visible
+        function initializeCounters() {
+            const counters = document.querySelectorAll('.hero-stat .number');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        counters.forEach(counter => {
+                            const target = parseInt(counter.getAttribute('data-target'));
+                            counter.classList.add('counting');
+                            animateCounter(counter, target);
+                        });
+                        observer.disconnect();
+                    }
+                });
+            }, { threshold: 0.5 });
+
+            const heroSection = document.querySelector('.hero-section');
+            if (heroSection) {
+                observer.observe(heroSection);
+            }
+        }
+
+        // Animate progress bars
+        function animateProgressBars() {
+            const progressBars = document.querySelectorAll('.progress-bar[data-target]');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const progressBar = entry.target;
+                        const target = progressBar.getAttribute('data-target');
+                        const ticketText = progressBar.closest('.fixture-body').querySelector('.ticket-availability');
+                        
+                        setTimeout(() => {
+                            progressBar.style.width = target + '%';
+                            if (ticketText) {
+                                let current = 0;
+                                const increment = target / 60;
+                                const timer = setInterval(() => {
+                                    current += increment;
+                                    if (current >= target) {
+                                        ticketText.textContent = target;
+                                        clearInterval(timer);
+                                    } else {
+                                        ticketText.textContent = Math.floor(current);
+                                    }
+                                }, 16);
+                            }
+                        }, 200);
+                    }
+                });
+            }, { threshold: 0.3 });
+
+            progressBars.forEach(bar => observer.observe(bar));
+        }
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Back to Top Button
+        const backToTop = document.getElementById('backToTop');
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 300) {
+                backToTop.classList.add('show');
+            } else {
+                backToTop.classList.remove('show');
+            }
+        });
+
+        backToTop.addEventListener('click', function(e) {
+            e.preventDefault();
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
         // Smooth scroll for navigation links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    // Close navbar on mobile after click
+                    const navbarCollapse = document.querySelector('.navbar-collapse');
+                    if (navbarCollapse && navbarCollapse.classList.contains('show')) {
+                        new bootstrap.Collapse(navbarCollapse).toggle();
+                    }
+                    
+                    // Update active nav link
+                    document.querySelectorAll('.nav-link').forEach(link => {
+                        link.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                    
+                    // Smooth scroll to target
+                    const offsetTop = targetElement.offsetTop - 80;
+                    window.scrollTo({
+                        top: offsetTop,
+                        behavior: 'smooth'
+                    });
+                }
             });
         });
 
-        // Add animation to cards on scroll
+        // Initialize tooltips
+        const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+        const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
+
+        // Animation on scroll
         const observerOptions = {
             threshold: 0.1,
             rootMargin: '0px 0px -50px 0px'
@@ -1666,14 +1935,49 @@
             });
         }, observerOptions);
 
-        // Observe all cards for animation
-        document.querySelectorAll('.fixture-card, .team-card, .match-card').forEach(card => {
-            card.style.opacity = 0;
-            card.style.transform = 'translateY(20px)';
-            card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-            observer.observe(card);
+        // Observe elements for animation
+        document.querySelectorAll('.slide-up').forEach(element => {
+            element.style.opacity = 0;
+            element.style.transform = 'translateY(30px)';
+            element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(element);
+        });
+
+        // Update copyright year
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+        // Initialize all animations when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeCounters();
+            animateProgressBars();
+            
+            // Auto-start carousel
+            const carousel = new bootstrap.Carousel(document.getElementById('venueCarousel'), {
+                interval: 4000,
+                wrap: true
+            });
+        });
+
+        // Update active nav on scroll
+        window.addEventListener('scroll', () => {
+            let current = '';
+            const sections = document.querySelectorAll('section[id]');
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (window.scrollY >= (sectionTop - 100)) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
         });
     </script>
 </body>
-
 </html>
